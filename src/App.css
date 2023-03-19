@@ -1,0 +1,71 @@
+body,
+p,
+span {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+input {
+  outline: none;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
+.form-control:focus {
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.color-009ED8 {
+  color: #009ed8;
+}
+
+.color-667085 {
+  color: #667085;
+}
+
+.color-F0F1F3 {
+  background-color: #f0f1f3;
+}
+
+.text-grey {
+  color: #49505e;
+}
+
+.color-5D6679 {
+  color: #5d6679;
+}
+
+.border-light-red {
+  border: 2px solid #eeeeee;
+}
+
+.border-horizontal-light-red {
+  border-left: 2px solid #eeeeee;
+  border-right: 2px solid #eeeeee;
+}
+
+.border-end-light-red {
+  border-right: 2px solid #eeeeee;
+}
+/* @media only screen and (max-width: 595px) {...} */
+
+/* Small screen devices (600px and above) */
+/* @media only screen and (min-width: 600px) {...} */
+
+/* Medium screen devices (768px and above) */
+/* @media only screen and (min-width: 768px) {...} */
+
+/* Big screen devices (889px and above) */
+/* @media only screen and (min-width: 889px) {...} */
+
+/* Extra big screen devices (1200px and above) */
+/* @media only screen and (min-width: 1200px) {...} */

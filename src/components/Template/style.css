@@ -1,0 +1,66 @@
+.sidebar {
+  width: 20%;
+  height: 100vh;
+}
+
+.navbar {
+  position: fixed;
+  width: inherit;
+  height: 100px;
+}
+
+.main-content {
+  width: 80%;
+}
+
+.navbar2 {
+  position: fixed;
+  width: inherit;
+  display: none;
+  height: 40px;
+}
+
+.content {
+  margin-top: 100px;
+  /* min-height: calc(100vh - 80px - 24px); */
+}
+
+@media only screen and (max-width: 595px) {
+  .sidebar {
+    width: 0%;
+    display: none;
+  }
+
+  .main-content {
+    width: 100%;
+  }
+
+  .content {
+    margin-top: 140px;
+  }
+
+  .navbar2 {
+    display: block;
+    margin-top: 100px;
+  }
+}
+
+@media only screen and (min-width: 596px) and (max-width: 889px) {
+  .sidebar {
+    width: 37%;
+  }
+
+  .main-content {
+    width: 63%;
+  }
+}
+
+@media only screen and (min-width: 890px) and (max-width: 1200px) {
+  .sidebar {
+    width: 25%;
+  }
+
+  .main-content {
+    width: 75%;
+  }
+}

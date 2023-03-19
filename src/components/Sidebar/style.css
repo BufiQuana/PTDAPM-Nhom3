@@ -1,0 +1,11 @@
+.sidebar-header {
+  height: 100px;
+}
+
+.sidebar-item {
+  height: 56px;
+}
+
+a:hover {
+  color: #5d6679;
+}
