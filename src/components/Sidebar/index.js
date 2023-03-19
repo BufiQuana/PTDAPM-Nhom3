@@ -1,12 +1,13 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { ASSETS } from "../../constants/ASSETS";
 import { logout } from "../../redux/reducers/Auth";
 import "./style.css";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const listSidebarItem = [
     {
@@ -16,10 +17,10 @@ const Sidebar = () => {
       href: "/",
     },
     {
-      title: "Quản lý công việc",
-      icon: ASSETS.icInventory,
-      iconAcitve: ASSETS.icInventoryActive,
-      href: "/manager/work",
+      title: "Quản lý dự án",
+      icon: ASSETS.icSuppliers,
+      iconAcitve: ASSETS.icSuppliersActive,
+      href: "/manager/project",
     },
     {
       title: "Quản lý thời gian",
@@ -28,10 +29,10 @@ const Sidebar = () => {
       href: "/manager/time",
     },
     {
-      title: "Quản lý dự án",
-      icon: ASSETS.icSuppliers,
-      iconAcitve: ASSETS.icSuppliersActive,
-      href: "/manager/project",
+      title: "Quản lý thành viên",
+      icon: ASSETS.icInventory,
+      iconAcitve: ASSETS.icInventoryActive,
+      href: "/manager/team",
     },
   ];
 
@@ -49,7 +50,7 @@ const Sidebar = () => {
     },
   ];
 
-  const [currentActive, setCurrentActive] = React.useState("Trang chủ");
+  const [currentActive, setCurrentActive] = React.useState(location.pathname);
 
   return (
     <div className="h-100 d-flex flex-column">
@@ -67,16 +68,16 @@ const Sidebar = () => {
               <Link
                 to={item.href}
                 onClick={() => {
-                  setCurrentActive(item.title);
+                  setCurrentActive(item.href);
                 }}
                 className={`sidebar-item d-flex align-items-center ps-5 color-5D6679 ${
-                  currentActive === item.title && "text-primary text-semibold"
+                  currentActive === item.href && "text-primary text-semibold"
                 }`}
                 key={item.title}
               >
                 <img
                   src={
-                    currentActive === item.title ? item.iconAcitve : item.icon
+                    currentActive === item.href ? item.iconAcitve : item.icon
                   }
                   alt=""
                   width={24}
@@ -94,19 +95,23 @@ const Sidebar = () => {
               <Link
                 to={item.href}
                 onClick={() => {
-                  setCurrentActive(item.title);
+                  setCurrentActive(item.href);
                   if (item.title === "Log out") {
                     dispatch(logout());
                   }
                 }}
                 className={`sidebar-item d-flex align-items-center ps-5 color-5D6679 ${
-                  currentActive === item.title && "text-primary text-semibold"
+                  currentActive === item.href &&
+                  item.title !== "Log out" &&
+                  "text-primary text-semibold"
                 }`}
                 key={item.title}
               >
                 <img
                   src={
-                    currentActive === item.title ? item.iconAcitve : item.icon
+                    currentActive === item.href && item.title !== "Log out"
+                      ? item.iconAcitve
+                      : item.icon
                   }
                   alt=""
                   width={24}

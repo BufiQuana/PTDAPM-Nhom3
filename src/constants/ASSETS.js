@@ -28,4 +28,5 @@ export const ASSETS = {
   icVatLieu: require("../assets/image/icVatLieu.png"),
   icThongTin: require("../assets/image/icThongTin.png"),
   icCongNghe: require("../assets/image/icCongNghe.png"),
+  icFilter: require("../assets/image/icFilter.png"),
 };

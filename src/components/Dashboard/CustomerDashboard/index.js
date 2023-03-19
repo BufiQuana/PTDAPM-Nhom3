@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ASSETS } from "../../constants/ASSETS";
+import { ASSETS } from "../../../constants/ASSETS";
 
 const CustomerDashboard = (props) => {
   const { name, gender, job, icon } = props.info;

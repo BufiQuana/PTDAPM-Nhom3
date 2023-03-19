@@ -1,9 +1,9 @@
 import * as React from "react";
-import { ChartNganSach } from "../../../components/ChartNganSach/index";
-import { ChartTienDo } from "../../../components/ChartTienDo";
-import CustomerDashboard from "../../../components/CustomerDashboard";
-import ListContentDashboard from "../../../components/ListContentDashboard";
-import TableDashboard from "../../../components/TableDashboard";
+import { ChartNganSach } from "../../../components/Dashboard/ChartNganSach/index";
+import { ChartTienDo } from "../../../components/Dashboard/ChartTienDo";
+import CustomerDashboard from "../../../components/Dashboard/CustomerDashboard";
+import ListContentDashboard from "../../../components/Dashboard/ListContentDashboard";
+import TableDashboard from "../../../components/Dashboard/TableDashboard";
 import Template from "../../../components/Template";
 import { ASSETS } from "../../../constants/ASSETS";
 import "./style.css";
