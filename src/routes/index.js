@@ -35,7 +35,7 @@ export default () => {
           <Route path={"/manager/team"} element={<ManagerTeam />} />
           <Route path={"/manager/time"} element={<ManagerTime />} />
           <Route path={"/manager/project/detail"} element={<ProjectDetail />} />
-          <Route path={"/setting"} element={<Setting />} />
+
           <Route path={"*"} element={<Navigate to={"/notfound"} />} />
         </Routes>
       )}

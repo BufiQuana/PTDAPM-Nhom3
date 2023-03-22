@@ -15,7 +15,12 @@ const Navbar = () => {
         />
       </div>
       <div className="d-flex align-items-center mx-3">
-        <img src={ASSETS.icBell} alt="" className="me-3" />
+        <div className="me-3 position-relative">
+          <img src={ASSETS.icBell} alt="" />
+          {/* <div className="position-fixed bg-primary wrapper-notification mt-2">
+            a
+          </div> */}
+        </div>
         <Avatar />
       </div>
     </div>
