@@ -40,7 +40,7 @@ const ManagerProject = () => {
     <Template>
       <div className="container-fluid pt-4 px-32">
         <div className="row g-4">
-          <div className="col-12 col-xl-8">
+          {/* <div className="col-12 col-xl-8">
             <div className="bg-light p-3 rounded-3 h-100 d-flex flex-column">
               <p className="fw-semibold mb-4">Dự án tổng quan</p>
               <ListContentDashboard list={listDuAn} />
@@ -51,7 +51,7 @@ const ManagerProject = () => {
               <p className="fw-semibold mb-4">Công việc</p>
               <ListContentDashboard list={listCongViec} />
             </div>
-          </div>
+          </div> */}
           <div className="col-12">
             <div className="bg-light p-3 rounded-3 h-100 d-flex flex-column overflow-scroll">
               <div className="d-flex flex-column flex-lg-row align-items-center justify-content-between">

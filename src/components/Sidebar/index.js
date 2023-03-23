@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { ASSETS } from "../../constants/ASSETS";
 import { logout } from "../../redux/reducers/Auth";
+import { setValue } from "../../redux/reducers/NavbarSearch";
 import "./style.css";
 
 const Sidebar = () => {

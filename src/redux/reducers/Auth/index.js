@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-export const counterSlice = createSlice({
+export const authSlice = createSlice({
   name: "auth",
   initialState: {
     username: localStorage.getItem("username") || "",
@@ -14,5 +14,5 @@ export const counterSlice = createSlice({
     },
   },
 });
-export const { login, logout } = counterSlice.actions;
-export default counterSlice.reducer;
+export const { login, logout } = authSlice.actions;
+export default authSlice.reducer;

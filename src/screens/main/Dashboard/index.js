@@ -6,6 +6,7 @@ import CustomerDashboard from "../../../components/Dashboard/CustomerDashboard";
 import ListContentDashboard from "../../../components/Dashboard/ListContentDashboard";
 import TableDashboard from "../../../components/Dashboard/TableDashboard";
 import Template from "../../../components/Template";
+import { Link } from "react-router-dom";
 import { ASSETS } from "../../../constants/ASSETS";
 import "./style.css";
 
@@ -108,27 +109,39 @@ const Dashboard = () => {
     <Template>
       <div className="container-fluid pt-4 px-32">
         <div className="row g-4">
-          <div className="col-12 col-xl-8">
+          <div className="col-12 col-xl-12">
             <div className="bg-light p-3 rounded-3 h-100 d-flex flex-column">
-              <p className="fw-semibold mb-4">Dự án tổng quan</p>
+              <div className="d-flex justify-content-between align-items-center">
+                <p className="fw-semibold mb-4">Dự án tổng quan</p>
+                <Link to="/manager/project">Xem tất cả</Link>
+              </div>
               <ListContentDashboard list={listDuAn} />
             </div>
           </div>
-          <div className="col-12 col-xl-4">
+          {/* <div className="col-12 col-xl-4">
             <div className="bg-light p-3 rounded-3 h-100 d-flex flex-column">
-              <p className="fw-semibold mb-4">Công việc</p>
-              <ListContentDashboard list={listCongViec} />
+            <div className="d-flex justify-content-between align-items-center">
+            </div>  
+            <ListContentDashboard list={listCongViec} />
+            <Link to="/">Xem tất cả</Link>
+            <p className="fw-semibold mb-4">Công việc</p>
             </div>
-          </div>
+          </div> */}
           <div className="col-12 col-xl-8">
             <div className="bg-light p-3 rounded-3 h-100 d-flex flex-column">
-              <p className="fw-semibold mb-4">Tài nguyên</p>
+              <div className="d-flex justify-content-between align-items-center">
+                <p className="fw-semibold mb-4">Tài nguyên</p>
+                <Link to="/manager/project">Xem tất cả</Link>
+              </div>
               <ListContentDashboard list={listTaiNguyen} />
             </div>
           </div>
           <div className="col-12 col-xl-4">
             <div className="bg-light p-3 rounded-3 h-100 d-flex flex-column">
-              <p className="fw-semibold mb-4">Báo cáo</p>
+              <div className="d-flex justify-content-between align-items-center">
+                <p className="fw-semibold mb-4">Báo cáo</p>
+                <Link to="/manager/report">Xem tất cả</Link>
+              </div>
               <ListContentDashboard list={listBaoCao} />
             </div>
           </div>
