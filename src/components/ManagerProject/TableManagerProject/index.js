@@ -32,6 +32,7 @@ const TableManagerProject = () => {
                 </td>
                 <td style={{ minWidth: 100 }} className="">
                   <Link to="/manager/project/detail">Chi tiết</Link>
+                  {/* <a href="/manager/project/detail">Chi tiết</a> */}
                 </td>
               </tr>
             );
