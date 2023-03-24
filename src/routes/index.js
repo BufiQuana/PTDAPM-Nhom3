@@ -17,6 +17,11 @@ import ManagerTime from "../screens/main/ManagerTime";
 import NotFound from "../screens/main/NotFound";
 import ProjectDetail from "../screens/main/ProjectDetail";
 import Setting from "../screens/main/Setting";
+import Newresource from "../screens/main/Newresource";
+import Detail_TN from "../screens/main/Detail_TN";
+
+// import Manageresource from "../screens/main/Manageresource";
+// Newresource
 
 export default () => {
   const username = useSelector((state) => {
@@ -37,7 +42,13 @@ export default () => {
           <Route path={"/manager/time"} element={<ManagerTime />} />
           <Route path={"/manager/project/detail"} element={<ProjectDetail />} />
           <Route path={"/setting"} element={<Setting />} />
+
           <Route path={"/manager/report"} element={<ManagerReport />} />
+          <Route path={"/Newresource"} element={<Newresource />} />
+          <Route path={"/Detail_TN"} element={<Detail_TN />} />
+
+          {/* <Route path={"/Manageresource"} element={<Manageresource/>} /> */}
+
           <Route path={"*"} element={<Navigate to={"/notfound"} />} />
         </Routes>
       )}

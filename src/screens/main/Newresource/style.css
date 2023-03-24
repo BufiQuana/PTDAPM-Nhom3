@@ -1,0 +1,33 @@
+.h2 {
+  text-align: center;
+}
+.form-tn {
+  width: 800px;
+  background-color: white;
+  text-align: center;
+  /* padding-left: 20px; */
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.col-form-label-sm {
+  padding: 20px;
+}
+.col-sm-10 {
+  padding: 20px;
+}
+.btn-primary {
+  width: 300px;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+  /* margin-top: 20px; */
+}
+.input-group {
+  text-align: center;
+  margin-top: auto;
+}
