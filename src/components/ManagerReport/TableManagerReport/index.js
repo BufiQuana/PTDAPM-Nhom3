@@ -1,7 +1,6 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
 
-const TableManagerReport = () => {
+const TableManagerReport = (props) => {
   return (
     <>
       <div className="w-100 overflow-scroll">
@@ -22,35 +21,35 @@ const TableManagerReport = () => {
               <td scope="col">Trạng thái</td>
               <td scope="col">Tiến độ</td>
             </tr>
-            {[...Array(10).keys()].map((item) => {
+            {props.list.map((item) => {
               return (
-                <tr className="align-middle fw-semibold" key={item}>
+                <tr className="align-middle fw-semibold" key={item.id}>
                   <td className="text-nowrap" style={{ minWidth: 70 }}>
-                    28717
+                    {item.id}
                   </td>
                   <td className="text-nowrap" style={{ minWidth: 180 }}>
-                    Quản lý dự án
+                    {item.task}
                   </td>
                   <td className="text-nowrap" style={{ minWidth: 180 }}>
-                    Bùi Trung Quân
+                    {item.member}
                   </td>
                   <td className="text-nowrap" style={{ minWidth: 180 }}>
-                    Bùi Trung Quân
+                    {item.manager}
                   </td>
                   <td className="text-nowrap" style={{ minWidth: 180 }}>
-                    10/10/22
+                    {item.dateStart}
                   </td>
                   <td className="text-nowrap" style={{ minWidth: 180 }}>
-                    11/12/22
+                    {item.dateEnd}
                   </td>
                   <td className="text-nowrap" style={{ minWidth: 180 }}>
-                    100%
+                    {item.completion}
                   </td>
                   <td className="text-nowrap" style={{ minWidth: 180 }}>
-                    Chưa phê duyệt
+                    {item.state}
                   </td>
                   <td className="text-nowrap" style={{ minWidth: 180 }}>
-                    Đúng tiến độ
+                    {item.progress}
                   </td>
                 </tr>
               );

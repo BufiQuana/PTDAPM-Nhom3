@@ -1,8 +1,10 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import Template from "../../../components/Template";
 import "./style.css";
 
 const Newresource = () => {
+  const navigate = useNavigate();
   return (
     <Template>
       <div className="container-fluid pt-4 px-32">
@@ -116,10 +118,18 @@ const Newresource = () => {
 
         <div class="btn-primary">
           {" "}
-          <button type="button" class="btn btn-primary btn-sm">
+          <button
+            type="button"
+            onClick={() => navigate(-1)}
+            class="btn btn-primary btn-sm"
+          >
             Tạo
           </button>
-          <button type="button" class="btn btn-secondary btn-sm">
+          <button
+            type="button"
+            onClick={() => navigate(-1)}
+            class="btn btn-secondary btn-sm"
+          >
             Hủy
           </button>
         </div>

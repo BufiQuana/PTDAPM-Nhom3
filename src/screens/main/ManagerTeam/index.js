@@ -347,7 +347,7 @@ const ManagerTeam = () => {
               </h1>
             </div>
             <div className="modal-body">
-              Bạn có chắc chắn thành viên {currentThanhVien.name} có ID là{" "}
+              Bạn có chắc chắn xoá thành viên {currentThanhVien.name} có ID là{" "}
               {currentThanhVien.id}
             </div>
             <div className="modal-footer justify-content-evenly">
