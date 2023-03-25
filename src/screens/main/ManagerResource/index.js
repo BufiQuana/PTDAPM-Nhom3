@@ -7,27 +7,27 @@ const ManagerResource = () => {
     {
       id: "1",
       project: "Quản lý dự án",
-      name: "Tài nguyên thuỷ",
+      name: "Tài nguyên A",
     },
     {
       id: "2",
       project: "Quản lý dự án",
-      name: "Tài nguyên mộc",
+      name: "Tài nguyên B",
     },
     {
       id: "3",
       project: "Quản lý dự án",
-      name: "Tài nguyên kim",
+      name: "Tài nguyên C",
     },
     {
       id: "4",
       project: "Quản lý dự án",
-      name: "Tài nguyên thổ",
+      name: "Tài nguyên D",
     },
     {
       id: "5",
       project: "Quản lý dự án",
-      name: "Tài nguyên hoả",
+      name: "Tài nguyên E",
     },
   ];
 

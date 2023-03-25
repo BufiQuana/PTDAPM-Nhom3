@@ -24,10 +24,10 @@ const Sidebar = () => {
       href: "/manager/project",
     },
     {
-      title: "Quản lý thời gian",
+      title: "Quản lý tài nguyên",
       icon: ASSETS.icReport,
       iconAcitve: ASSETS.icReportActive,
-      href: "/manager/time",
+      href: "/manager/resource",
     },
     {
       title: "Quản lý thành viên",
