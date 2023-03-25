@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 
-const TableManagerProject = () => {
+const TableManagerProject = (props) => {
   return (
     <>
       <table
@@ -19,16 +19,16 @@ const TableManagerProject = () => {
             <td scope="col">Trạng thái</td>
             <td scope="col">Hoạt động</td>
           </tr>
-          {[...Array(10).keys()].map((item) => {
+          {props.list.map((item) => {
             return (
-              <tr className="align-middle fw-semibold" key={item}>
-                <td style={{ minWidth: 70 }}>28717</td>
-                <td style={{ minWidth: 180 }}>Quản lý dự án</td>
-                <td style={{ minWidth: 180 }}>Bùi Trung Quân</td>
-                <td style={{ minWidth: 130 }}>70000đ</td>
-                <td style={{ minWidth: 130 }}>11/12/22</td>
+              <tr className="align-middle fw-semibold" key={item.id}>
+                <td style={{ minWidth: 70 }}>{item.id}</td>
+                <td style={{ minWidth: 180 }}>{item.project}</td>
+                <td style={{ minWidth: 180 }}>{item.manager}</td>
+                <td style={{ minWidth: 130 }}>{item.budget}</td>
+                <td style={{ minWidth: 130 }}>{item.estimate}</td>
                 <td style={{ minWidth: 130 }} className="text-success">
-                  Out for delivery
+                  {item.state}
                 </td>
                 <td style={{ minWidth: 100 }} className="">
                   <Link to="/manager/project/detail">Chi tiết</Link>
