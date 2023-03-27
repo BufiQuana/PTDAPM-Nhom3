@@ -2,25 +2,14 @@ import * as React from "react";
 import { ASSETS } from "../../../constants/ASSETS";
 import "./style.css";
 import HR from "../../../components/HR";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../../redux/reducers/Auth";
+import { AUTH_API } from "../../../api/Auth";
+import { request } from "../../../api/config";
+import axios from "axios";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const userTest = [
-    {
-      username: "btq2001",
-      password: "123456",
-    },
-    {
-      username: "bufiquana",
-      password: "123456",
-    },
-    {
-      username: "test",
-      password: "123456",
-    },
-  ];
 
   const [state, setState] = React.useState({
     username: "",
@@ -34,27 +23,42 @@ const Login = () => {
 
   const [isHidden, setIsHidden] = React.useState(true);
 
-  const checkValidate = () => {
-    setMessageValidate({
-      messageUsername: state.username ? "" : "Hãy nhập tên đăng nhâp",
-      messagePassword: state.password ? "" : "Hãy nhập mật khẩu",
-    });
-    let userCheck = userTest.filter((item) => {
-      return (
-        item.username === state.username && item.password === state.password
-      );
-    });
-    console.log(userCheck);
-    if (userCheck.length) {
-      dispatch(login(state.username));
-    }
-
-    if (state.username && state.password) {
+  const onLogin = async () => {
+    if (!state.username || !state.password) {
       setMessageValidate({
-        messageUsername: "Sai tài khoản hoặc mật khẩu hãy nhập lại",
-        messagePassword: "",
+        messageUsername: state.username ? "" : "Hãy nhập tên đăng nhâp",
+        messagePassword: state.password ? "" : "Hãy nhập mật khẩu",
       });
-      setState({ ...state, username: "", password: "" });
+    } else {
+      request
+        .post(
+          "/api/project/management/user/login",
+          {
+            username: state.username,
+            grant_type: "password",
+            password: state.password,
+            scope: "openid",
+            refresh_token:
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOiJ0dWFuYmVvdm5uQGdtYWlsLmNvbSIsInNjb3BlIjpbIm9wZW5pZCJdLCJyb2xlcyI6WyJST0xFX0FETUlOIl0sImF0aSI6IjVkMGVlMWM1LWYyYWEtNGQzNy1hYWQ5LTNkODQ1NGVmYTZjMiIsImZ1bGxOYW1lIjoidHVhbmJlb3ZubkBnbWFpbC5jb20iLCJleHAiOjE2MjgzODg4OTIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiNzJjYjc1MDktNWRlOC00ZDI2LWFhMDUtZmFlNGQxYmQyMmY0IiwiZW1haWwiOiJ0dWFuYmVvdm5uQGdtYWlsLmNvbSIsImNsaWVudF9pZCI6ImNsaWVudF9pZCJ9.X6OGPbl7-TA4fQG0RTilASWWebL5XzDdPeoZDcgqCNA",
+          },
+          {
+            headers: {
+              Authorization: "Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=",
+            },
+          }
+        )
+        .then((response) => {
+          dispatch(login(response.data.access_token));
+        })
+        .catch((error) => {
+          if (state.username && state.password) {
+            setMessageValidate({
+              messageUsername: "Sai tài khoản hoặc mật khẩu hãy nhập lại",
+              messagePassword: "",
+            });
+            setState({ ...state, username: "", password: "" });
+          }
+        });
     }
   };
 
@@ -147,7 +151,7 @@ const Login = () => {
           </div>
           <div
             onClick={() => {
-              checkValidate();
+              onLogin();
             }}
             className="btn btn-primary w-100 my-md-3 my-3 btnDangNhap d-inline-flex align-items-center justify-content-center fs-5"
           >

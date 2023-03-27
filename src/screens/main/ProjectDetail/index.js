@@ -1,34 +1,36 @@
 import * as React from "react";
 //import DetailAdjustments from "../../../components/Detail/DetailAdjustments";
 import DetailOverview from "../../../components/Detail/DetailOverview";
+import DetailProgress from "../../../components/Detail/DetailProgress";
+import DetailSchedule from "../../../components/Detail/DetailSchedule";
+import DetailMission from "../../../components/Detail/DetailMission";
 import InputModal from "../../../components/InputModal";
-import { useSelector } from "react-redux";
-import { ASSETS } from "../../../constants/ASSETS";
-import TableManagerTeam from "../../../components/ManagerTeam/TableManagerTeam";
-
-//import DetailHistory from "../../../components/Detail/DetailHistory";
 import Template from "../../../components/Template";
 import "./style.css";
 
 const ProjectDetail = () => {
-  const currentDuAnDetail = {
-    manager: "Quản lý A",
-    description: "Mô tả A",
-    dateStart: "Ngày A",
-    dateEnd: "Ngày B",
-    budget: "Ngân sách A",
-    process: "Quá trình A",
-    image: "Ảnh A",
-  };
-
   const listContentDetail = [
     {
-      title: "Tên dự án",
+      title: "Dự án tổng quan",
+      component: <DetailOverview />,
+    },
+    {
+      title: "Danh sách nhiệm vụ",
+      component: <DetailMission />,
+    },
+    {
+      title: "Đặt lịch",
+      component: <DetailSchedule />,
+    },
+
+    {
+      title: "Tiến độ",
+      component: <DetailProgress />,
     },
   ];
 
   const [currentContent, setCurrentContent] = React.useState({
-    title: "Tên dự án",
+    title: "Dự án tổng quan",
     component: <DetailOverview />,
   });
 
@@ -79,41 +81,8 @@ const ProjectDetail = () => {
             })}
             <div className="flex-fill border-bottom"></div>
           </div>
-        </div>
-      </div>
-      <div className="container-fluid pt-1 px-15 justify-content-center">
-        <div className="bg-light rounded-3 p-3 mt-1">
-          <i className=" mt-3 mx-5 ">
-            Người quản lý: {currentDuAnDetail.manager}
-          </i>
-        </div>
-        <div className="bg-light rounded-3 p-3 mt-1 ">
-          <i className=" mt-3 mx-5 ">
-            Mô tả dự án: {currentDuAnDetail.description}
-          </i>
-        </div>
-        <div className="bg-light rounded-3 p-3 mt-1 ">
-          <i className=" mt-3 mx-5 ">
-            Ngày giao: {currentDuAnDetail.dateStart}
-          </i>
-        </div>
-        <div className="bg-light rounded-3 p-3 mt-1 ">
-          <i className=" mt-3 mx-5 ">
-            Ngày hết hạn dự kiến: {currentDuAnDetail.dateEnd}
-          </i>
-        </div>
-        <div className="bg-light rounded-3 p-3 mt-1 ">
-          <i className=" mt-3 mx-5 ">
-            Ngân sách dự kiến: {currentDuAnDetail.budget}
-          </i>
-        </div>
-        <div className="bg-light rounded-3 p-3 mt-1 ">
-          <i className=" mt-3 mx-5 ">
-            Quá trình phát triển dự án: {currentDuAnDetail.process}
-          </i>
-        </div>
-        <div className="bg-light rounded-3 p-3 mt-1 ">
-          <i className=" mt-3 mx-5 ">Ảnh: {currentDuAnDetail.image}</i>
+
+          {currentContent.component}
         </div>
       </div>
       <div

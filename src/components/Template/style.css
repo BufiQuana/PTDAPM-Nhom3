@@ -4,6 +4,7 @@
 }
 
 .navbar {
+  z-index: 999;
   position: fixed;
   width: inherit;
   height: 100px;
@@ -14,6 +15,7 @@
 }
 
 .navbar2 {
+  z-index: 999;
   position: fixed;
   width: inherit;
   display: none;

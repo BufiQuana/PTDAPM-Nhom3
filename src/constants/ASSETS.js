@@ -1,4 +1,6 @@
 export const ASSETS = {
+  imageCat: require("../assets/image/imageCat.webp"),
+  imageCat2: require("../assets/image/imageCat2.jpeg"),
   notFoundImage: require("../assets/image/404NotFound.png"),
   login: require("../assets/image/login.png"),
   logo: require("../assets/image/logo.png"),

@@ -11,17 +11,6 @@ import { ASSETS } from "../../../constants/ASSETS";
 import "./style.css";
 
 const Dashboard = () => {
-  axios
-    // .get("https://jsonplaceholder.typicode.com/todos/1")
-    .get("http://127.0.0.1:8000/api/get-user")
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    });
-
   const listDuAn = [
     {
       icon: ASSETS.icDone,

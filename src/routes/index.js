@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useSelector } from "react-redux";
 import {
@@ -25,12 +25,16 @@ import ManagerResource from "../screens/main/ManagerResource";
 // Newresource
 
 export default () => {
-  const username = useSelector((state) => {
-    return state.auth.username;
+  const token = useSelector((state) => {
+    return state.auth.token;
   });
+
+  // useEffect(() => {
+  //   console.log(token);
+  // }, []);
   return (
     <Router>
-      {!username ? (
+      {!token ? (
         <Routes>
           <Route path={"/"} element={<Login />} />
         </Routes>
