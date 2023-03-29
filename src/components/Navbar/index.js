@@ -15,6 +15,17 @@ const Navbar = () => {
 
   React.useEffect(() => {
     dispatch(setValue(""));
+    Array.from(document.getElementsByClassName("modal show")).forEach(
+      (element) => {
+        element.classList.remove("show");
+      }
+    );
+    Array.from(document.getElementsByClassName("modal-backdrop show")).forEach(
+      (element) => {
+        element.classList.remove("show");
+        element.style.display = "none";
+      }
+    );
   }, [location]);
 
   return (

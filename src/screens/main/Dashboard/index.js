@@ -11,17 +11,6 @@ import { ASSETS } from "../../../constants/ASSETS";
 import "./style.css";
 
 const Dashboard = () => {
-  axios
-    // .get("https://jsonplaceholder.typicode.com/todos/1")
-    .get("http://127.0.0.1:8000/api/get-user")
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    });
-
   const listDuAn = [
     {
       icon: ASSETS.icDone,
@@ -131,7 +120,7 @@ const Dashboard = () => {
             <div className="bg-light p-3 rounded-3 h-100 d-flex flex-column">
               <div className="d-flex justify-content-between align-items-center">
                 <p className="fw-semibold mb-4">Tài nguyên</p>
-                <Link to="/manager/project">Xem tất cả</Link>
+                <Link to="/manager/resource">Xem tất cả</Link>
               </div>
               <ListContentDashboard list={listTaiNguyen} />
             </div>

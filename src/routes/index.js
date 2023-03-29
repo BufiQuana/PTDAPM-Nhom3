@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useSelector } from "react-redux";
 import {
@@ -19,20 +19,28 @@ import ProjectDetail from "../screens/main/ProjectDetail";
 import Setting from "../screens/main/Setting";
 import Newresource from "../screens/main/Newresource";
 import Detail_TN from "../screens/main/Detail_TN";
+<<<<<<< HEAD
 import Time from "../screens/main/Time";
 import ManagerFile from "../screens/main/ManagerFile";
 // import DetailTime from "../screens/main/DetailTime";
+=======
+import ManagerResource from "../screens/main/ManagerResource";
+>>>>>>> 4f68fe17ed71f1fcd0148897696cb6f138e1dc07
 
 // import Manageresource from "../screens/main/Manageresource";
 // Newresource
 
 export default () => {
-  const username = useSelector((state) => {
-    return state.auth.username;
+  const token = useSelector((state) => {
+    return state.auth.token;
   });
+
+  // useEffect(() => {
+  //   console.log(token);
+  // }, []);
   return (
     <Router>
-      {!username ? (
+      {!token ? (
         <Routes>
           <Route path={"/"} element={<Login />} />
         </Routes>
@@ -47,7 +55,8 @@ export default () => {
           <Route path={"/setting"} element={<Setting />} />
 
           <Route path={"/manager/report"} element={<ManagerReport />} />
-          <Route path={"/Newresource"} element={<Newresource />} />
+          <Route path={"/manager/resource"} element={<ManagerResource />} />
+          <Route path={"/manager/resource/add"} element={<Newresource />} />
           <Route path={"/Detail_TN"} element={<Detail_TN />} />
           <Route path={"/Time"} element={<Time />} />
           <Route path={"/ManagerFile"} element={<ManagerFile />} />

@@ -1,6 +1,11 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { ASSETS } from "../../constants/ASSETS";
 import { logout } from "../../redux/reducers/Auth";
 import { setValue } from "../../redux/reducers/NavbarSearch";
@@ -9,6 +14,7 @@ import "./style.css";
 const Sidebar = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const listSidebarItem = [
     {
@@ -99,6 +105,7 @@ const Sidebar = () => {
                   setCurrentActive(item.href);
                   if (item.title === "Log out") {
                     dispatch(logout());
+                    navigate("/");
                   }
                 }}
                 className={`sidebar-item d-flex align-items-center ps-5 color-5D6679 ${

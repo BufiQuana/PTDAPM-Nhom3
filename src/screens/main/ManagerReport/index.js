@@ -11,49 +11,64 @@ const ManagerReport = () => {
     return state.navbarSearch.value;
   });
 
-  const listThanhVien = [
+  const listBaoCao = [
     {
       id: "1",
-      name: "A",
-      address: "A@gmail.com",
-      phone: "0123456789",
-      point: "10",
-      job: "BA",
+      task: "CV A",
+      member: "NTH A",
+      manager: "GV A",
+      dateStart: "NGV A",
+      dateEnd: "NHH A",
+      completion: "TLHT A",
+      state: "TT A",
+      progress: "TD A",
     },
     {
       id: "2",
-      name: "B",
-      address: "B@gmail.com",
-      phone: "0123456789",
-      point: "9.5",
-      job: "PO",
+      task: "CV B",
+      member: "NTH B",
+      manager: "GV B",
+      dateStart: "NGV B",
+      dateEnd: "NHH B",
+      completion: "TLHT B",
+      state: "TT B",
+      progress: "TD B",
     },
     {
       id: "3",
-      name: "C",
-      address: "C@gmail.com",
-      phone: "0123456789",
-      point: "9",
-      job: "Dev FE",
+      task: "CV C",
+      member: "NTH C",
+      manager: "GV C",
+      dateStart: "NGV C",
+      dateEnd: "NHH C",
+      completion: "TLHT C",
+      state: "TT C",
+      progress: "TD C",
     },
     {
       id: "4",
-      name: "D",
-      address: "D@gmail.com",
-      phone: "0123456789",
-      point: "8.5",
-      job: "Dev BE",
+      task: "CV D",
+      member: "NTH D",
+      manager: "GV D",
+      dateStart: "NGV D",
+      dateEnd: "NHH D",
+      completion: "TLHT D",
+      state: "TT D",
+      progress: "TD D",
     },
     {
       id: "5",
-      name: "E",
-      address: "E@gmail.com",
-      phone: "0123456789",
-      point: "8",
-      job: "Tester",
+      task: "CV E",
+      member: "NTH E",
+      manager: "GV E",
+      dateStart: "NGV E",
+      dateEnd: "NHH E",
+      completion: "TLHT E",
+      state: "TT E",
+      progress: "TD E",
     },
   ].filter((item) => {
-    return item.name.toLowerCase().includes(valueSearch.toLowerCase());
+    return item.task.toLowerCase().includes(valueSearch.toLowerCase());
   });
 
   const listDuAn = [
@@ -88,7 +103,7 @@ const ManagerReport = () => {
             <div className="bg-light p-3 rounded-3 h-100 d-flex flex-column">
               <p className="fw-semibold mb-4 text-nowrap">Danh sách báo cáo</p>
               <div className="overflow-scroll">
-                <TableManagerReport />
+                <TableManagerReport list={listBaoCao} />
               </div>
             </div>
           </div>

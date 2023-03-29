@@ -12,7 +12,9 @@
     "faker": "^6.6.6",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
+    "react-datepicker": "^4.10.0",
     "react-dom": "^18.2.0",
+    "react-quill": "^2.0.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.2",
     "react-scripts": "^5.0.1",
@@ -44,6 +46,10 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
+<<<<<<< HEAD
     "@fortawesome/fontawesome-free": "^6.3.0"
+=======
+    "react-select": "^5.7.2"
+>>>>>>> 4f68fe17ed71f1fcd0148897696cb6f138e1dc07
   }
 }

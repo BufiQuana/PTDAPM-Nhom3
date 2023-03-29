@@ -1,9 +1,10 @@
 import * as React from "react";
 import Template from "../../../components/Template";
 import "./style.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Detail_TN = () => {
+  const navigate = useNavigate();
   return (
     <Template>
       <div className="container-fluid pt-4 px-32">
@@ -130,10 +131,12 @@ const Detail_TN = () => {
               </div>
             </div>
           </form> */}
-          <button type="button" class="btn btn-primary">
-            <Link to="/manager/time" class="text">
-              Quay lại
-            </Link>
+          <button
+            type="button"
+            onClick={() => navigate(-1)}
+            class="btn btn-primary"
+          >
+            Quay lại
           </button>
         </div>
       </div>

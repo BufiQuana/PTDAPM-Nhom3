@@ -3,18 +3,23 @@ import { ASSETS } from "../../constants/ASSETS";
 import "./style.css";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/reducers/Auth";
+import { useNavigate } from "react-router-dom";
 
-const Avatar = () => {
+const Avatar = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <div className="d-none-mobile avatar">
       <img
-        src={ASSETS.avatar}
+        src={props.image || ASSETS.avatar}
         width="40"
         height="40"
         className="img-fluid rounded-circle"
         onClick={() => {
-          dispatch(logout());
+          if (!props.image) {
+            dispatch(logout());
+            navigate("/");
+          }
         }}
         alt=""
       ></img>

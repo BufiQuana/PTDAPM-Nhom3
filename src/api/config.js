@@ -1,13 +1,21 @@
 import axios from "axios";
 
 const request = axios.create({
-  baseURL: "https://127.0.0.1:8000/api/test",
+  baseURL: "https://server.6figurespos.com/gateway",
   timeout: 300000,
-  headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-  },
 });
+
+// request.interceptors.request.use(
+//   async (config) => {
+//     const token = localStorage.getItem("token");
+//     config.headers.Authorization = token
+//       ? "Bearer " + token
+//       : "Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=";
+//     return config;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   }
+// );
 
 export { request };

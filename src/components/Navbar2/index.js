@@ -1,8 +1,10 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ASSETS } from "../../constants/ASSETS";
 
 const Navbar2 = () => {
+  const location = useLocation();
+
   const listSidebarItem = [
     {
       title: "Trang chủ",
@@ -11,10 +13,10 @@ const Navbar2 = () => {
       href: "/",
     },
     {
-      title: "Quản lý công việc",
-      icon: ASSETS.icInventory,
-      iconAcitve: ASSETS.icInventoryActive,
-      href: "/manager/work",
+      title: "Quản lý dự án",
+      icon: ASSETS.icSuppliers,
+      iconAcitve: ASSETS.icSuppliersActive,
+      href: "/manager/project",
     },
     {
       title: "Quản lý thời gian",
@@ -23,14 +25,14 @@ const Navbar2 = () => {
       href: "/manager/time",
     },
     {
-      title: "Quản lý dự án",
-      icon: ASSETS.icSuppliers,
-      iconAcitve: ASSETS.icSuppliersActive,
-      href: "/manager/project",
+      title: "Quản lý thành viên",
+      icon: ASSETS.icInventory,
+      iconAcitve: ASSETS.icInventoryActive,
+      href: "/manager/team",
     },
   ];
 
-  const [currentActive, setCurrentActive] = React.useState("Trang chủ");
+  const [currentActive, setCurrentActive] = React.useState(location.pathname);
 
   return (
     <div className="row g-0 h-100">
@@ -39,10 +41,13 @@ const Navbar2 = () => {
           <Link
             to={item.href}
             key={item.title}
+            onClick={() => {
+              setCurrentActive(item.href);
+            }}
             className="col-3 d-flex align-items-center justify-content-center border-end-light-red"
           >
             <img
-              src={currentActive === item.title ? item.iconAcitve : item.icon}
+              src={currentActive === item.href ? item.iconAcitve : item.icon}
               alt=""
               className="img-fluid"
             />
