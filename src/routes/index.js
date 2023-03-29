@@ -19,6 +19,9 @@ import ProjectDetail from "../screens/main/ProjectDetail";
 import Setting from "../screens/main/Setting";
 import Newresource from "../screens/main/Newresource";
 import Detail_TN from "../screens/main/Detail_TN";
+import Time from "../screens/main/Time";
+import ManagerFile from "../screens/main/ManagerFile";
+// import DetailTime from "../screens/main/DetailTime";
 
 // import Manageresource from "../screens/main/Manageresource";
 // Newresource
@@ -46,6 +49,9 @@ export default () => {
           <Route path={"/manager/report"} element={<ManagerReport />} />
           <Route path={"/Newresource"} element={<Newresource />} />
           <Route path={"/Detail_TN"} element={<Detail_TN />} />
+          <Route path={"/Time"} element={<Time />} />
+          <Route path={"/ManagerFile"} element={<ManagerFile />} />
+          {/* <Route path={"/DetailTime"} element={<DetailTime />} /> */}
 
           {/* <Route path={"/Manageresource"} element={<Manageresource/>} /> */}
 
