@@ -19,7 +19,7 @@ const ProjectDetail = () => {
       component: <DetailMission />,
     },
     {
-      title: "Đặt lịch",
+      title: "Lịch họp",
       component: <DetailSchedule />,
     },
 

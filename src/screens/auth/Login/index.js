@@ -48,7 +48,7 @@ const Login = () => {
           }
         )
         .then((response) => {
-          dispatch(login(response.data.access_token));
+          dispatch(login(response.data));
         })
         .catch((error) => {
           if (state.username && state.password) {

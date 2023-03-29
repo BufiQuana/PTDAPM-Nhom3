@@ -4,10 +4,6 @@ import Avatar from "../Avatar";
 import "./style.css";
 
 const CardTask = (props) => {
-  React.useEffect(() => {
-    console.log(props.task.comments[0]);
-  }, []);
-
   const colorPriority =
     props.task.priority === "high"
       ? "border-primary"
@@ -87,9 +83,9 @@ const CardTask = (props) => {
                 <i className="fa-regular fa-comment me-2 mt-1"></i>
                 <p className="me-2 text-nowrap">Bình luận </p>
               </div>
-              {props.task.comments.map((item) => {
+              {props.task.comments.map((item, i) => {
                 return (
-                  <div className="d-flex align-items-center mb-2">
+                  <div className="d-flex align-items-center mb-2" key={i}>
                     <Avatar image={item.userAvatar} />
                     <input
                       type="text"
@@ -109,7 +105,7 @@ const CardTask = (props) => {
                 />
               </div>
             </div>
-            <div class="modal-footer justify-content-between">
+            <div className="modal-footer justify-content-between">
               <button
                 type="button"
                 className="btn btn-primary d-flex align-items-center"

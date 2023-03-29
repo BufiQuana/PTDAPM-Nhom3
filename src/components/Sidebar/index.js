@@ -45,7 +45,7 @@ const Sidebar = () => {
 
   const listSidebarItemBelow = [
     {
-      title: "Setting",
+      title: "Cài đặt",
       icon: ASSETS.icSetting,
       iconAcitve: ASSETS.icSettingActive,
       href: "/setting",
