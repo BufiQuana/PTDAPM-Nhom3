@@ -1,13 +1,14 @@
-import React from 'react'
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { increment, decrement } from "../../redux/reducers/counterSlice";
 
-export default ()=> {
-    const count = useSelector((state) => state.counter.value);
-    const dispatch = useDispatch();
+export default () => {
+  const count = useSelector((state) => state.counter.value);
+  const dispatch = useDispatch();
 
-    return (<>
-     <h2 className="mb-3">React Js Redux Store with Slice State Examle</h2>
+  return (
+    <>
+      <h2 className="mb-3">React Js Redux Store with Slice State Examle</h2>
       <p className="h1">{count}</p>
       <button
         onClick={() => {
@@ -25,5 +26,6 @@ export default ()=> {
       >
         Decrement
       </button>
-      </>)
-}
+    </>
+  );
+};

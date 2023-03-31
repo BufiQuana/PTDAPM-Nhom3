@@ -17,10 +17,10 @@ const TableManagerFile = (props) => {
             <tr className="align-middle">
               <td scope="col">ID</td>
               <td scope="col">
-                <i class="fas fa-file-signature fa-spin"></i> Tên Tài Liệu
+                <i class="fas fa-file-signature"></i> Tên Tài Liệu
               </td>
               <td scope="col">
-                <i class="fas fa-file-alt fa-spin"></i> File Tài Liệu
+                <i class="fas fa-file-alt"></i> File Tài Liệu
               </td>
               <td scope="col">Trạng Thái</td>
               <td scope="col">Tổng Quan</td>

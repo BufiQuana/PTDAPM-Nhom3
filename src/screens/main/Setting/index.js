@@ -1,35 +1,39 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
-import InputModal from "../../../components/InputModal";
+import SettingAppearance from "../../../components/Setting/SettingAppearance";
+import SettingInfo from "../../../components/Setting/SettingInfo";
+import SettingNotification from "../../../components/Setting/SettingNotification";
+import SettingSecurity from "../../../components/Setting/SettingSecurity";
 import Template from "../../../components/Template";
 
 const Setting = () => {
-  const auth = useSelector((state) => {
-    console.log(state.auth);
-    return state.auth;
-  });
-
   const listContent = [
     {
       icon: "user",
       title: "Thông tin cá nhân",
+      component: <SettingInfo />,
     },
     {
       icon: "palette",
       title: "Giao diện",
+      component: <SettingAppearance />,
     },
     {
       icon: "lock",
       title: "Bảo mật",
+      component: <SettingSecurity />,
     },
     {
       icon: "bell",
       title: "Thông báo",
+      component: <SettingNotification />,
     },
   ];
 
-  const [currentContent, setCurrentContent] =
-    React.useState("Thông tin cá nhân");
+  const [currentContent, setCurrentContent] = React.useState({
+    icon: "user",
+    title: "Thông tin cá nhân",
+    component: <SettingInfo />,
+  });
 
   return (
     <Template>
@@ -43,12 +47,12 @@ const Setting = () => {
                     <div
                       key={item.title}
                       className={`btn ${
-                        item.title == currentContent
+                        item.title === currentContent.title
                           ? "bg-white"
                           : "btn-secondary"
                       }`}
                       onClick={() => {
-                        setCurrentContent(item.title);
+                        setCurrentContent(item);
                       }}
                     >
                       <i className={`fa fa-${item.icon} me-2`}></i>
@@ -60,34 +64,7 @@ const Setting = () => {
             </div>
           </div>
 
-          <div className="col-12 col-xl-12">
-            <div className="bg-white p-3 rounded-3 h-100 d-flex flex-column">
-              <InputModal
-                title="ID"
-                value={auth.user_id}
-                action={(e) => {}}
-                disabled
-              />
-              <InputModal
-                title="Họ và tên"
-                value={auth.fullName}
-                action={(e) => {}}
-                disabled
-              />
-              <InputModal
-                title="Email"
-                value={auth.email}
-                action={(e) => {}}
-                disabled
-              />
-              <InputModal
-                title="Vai trò"
-                value={auth.roles}
-                action={(e) => {}}
-                disabled
-              />
-            </div>
-          </div>
+          <div className="">{currentContent.component}</div>
         </div>
       </div>
     </Template>

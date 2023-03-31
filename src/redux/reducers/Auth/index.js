@@ -8,8 +8,12 @@ export const authSlice = createSlice({
     fullName: "",
     roles: [],
     user_id: 0,
+    colorAccent: "F0F1F3",
   },
   reducers: {
+    changeColorAccent: (state, payload) => {
+      state.colorAccent = payload.payload;
+    },
     login: (state, payload) => {
       state.token = payload.payload.access_token;
       state.email = payload.payload.email;
@@ -28,5 +32,5 @@ export const authSlice = createSlice({
     },
   },
 });
-export const { login, logout } = authSlice.actions;
+export const { login, logout, changeColorAccent } = authSlice.actions;
 export default authSlice.reducer;

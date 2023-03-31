@@ -9,6 +9,7 @@ import Template from "../../../components/Template";
 import { Link } from "react-router-dom";
 import { ASSETS } from "../../../constants/ASSETS";
 import "./style.css";
+import { request } from "../../../api/config";
 
 const Dashboard = () => {
   const listDuAn = [

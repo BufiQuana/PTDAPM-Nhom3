@@ -3,10 +3,15 @@ import Sidebar from "../Sidebar";
 import Navbar from "../Navbar";
 import "./style.css";
 import Navbar2 from "../Navbar2";
+import { useSelector } from "react-redux";
 
 const Template = (props) => {
+  const auth = useSelector((state) => {
+    return state.auth;
+  });
+
   return (
-    <div className="d-flex color-F0F1F3">
+    <div className={`d-flex color-${auth.colorAccent}`}>
       <div className="sidebar bg-light">
         <Sidebar />
       </div>
