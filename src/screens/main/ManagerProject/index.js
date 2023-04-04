@@ -5,6 +5,7 @@ import InputModal from "../../../components/InputModal";
 import TableManagerProject from "../../../components/ManagerProject/TableManagerProject";
 import Template from "../../../components/Template";
 import { ASSETS } from "../../../constants/ASSETS";
+import { request } from "../../../api/config";
 
 const ManagerProject = () => {
   const valueSearch = useSelector((state) => {
@@ -86,6 +87,21 @@ const ManagerProject = () => {
       amount: 0,
     },
   ];
+
+  React.useEffect(() => {
+    request
+      .get("/api/project/management/admin/project", {
+        headers: {
+          Authorization: "Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <Template>

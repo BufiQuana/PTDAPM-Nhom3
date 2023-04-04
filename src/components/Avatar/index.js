@@ -9,7 +9,7 @@ const Avatar = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
-    <div className="d-none-mobile avatar">
+    <div className={`d-none-mobile avatar ${props.className}`}>
       <img
         src={props.image || ASSETS.avatar}
         width="40"

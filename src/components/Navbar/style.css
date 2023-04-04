@@ -6,10 +6,17 @@
   padding: 16px 8px;
 }
 
-.wrapper-notification {
+.notification-container {
   width: 400px;
-  height: 400px;
-  right: 65px;
+  max-height: 400px;
+  right: 60px;
+  top: 70px;
+}
+
+.ic-caret-up {
+  top: 72px;
+  right: 73px;
+  color: #dee2e6;
 }
 
 @media only screen and (max-width: 595px) {
