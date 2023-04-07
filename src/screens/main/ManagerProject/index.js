@@ -1,61 +1,71 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ListContentDashboard from "../../../components/Dashboard/ListContentDashboard";
 import InputModal from "../../../components/InputModal";
 import TableManagerProject from "../../../components/ManagerProject/TableManagerProject";
 import Template from "../../../components/Template";
 import { ASSETS } from "../../../constants/ASSETS";
 import { request } from "../../../api/config";
+import { setIsShow } from "../../../redux/reducers/Loading";
 
 const ManagerProject = () => {
+  const dispatch = useDispatch();
   const valueSearch = useSelector((state) => {
     return state.navbarSearch.value;
   });
 
-  const listTableDuAn = [
-    {
-      id: "1",
-      project: "Dự án A",
-      manager: "Quản lý A",
-      budget: "Ngân sách A",
-      estimate: "Thời gian A",
-      state: "Trạng thái A",
-    },
-    {
-      id: "2",
-      project: "Dự án B",
-      manager: "Quản lý B",
-      budget: "Ngân sách B",
-      estimate: "Thời gian B",
-      state: "Trạng thái B",
-    },
-    {
-      id: "3",
-      project: "Dự án C",
-      manager: "Quản lý C",
-      budget: "Ngân sách C",
-      estimate: "Thời gian C",
-      state: "Trạng thái C",
-    },
-    {
-      id: "4",
-      project: "Dự án D",
-      manager: "Quản lý D",
-      budget: "Ngân sách D",
-      estimate: "Thời gian D",
-      state: "Trạng thái D",
-    },
-    {
-      id: "5",
-      project: "Dự án E",
-      manager: "Quản lý E",
-      budget: "Ngân sách E",
-      estimate: "Thời gian E",
-      state: "Trạng thái E",
-    },
-  ].filter((item) => {
-    return item.project.toLowerCase().includes(valueSearch.toLowerCase());
-  });
+  const [addProject, setAddProject] = React.useState({});
+
+  const addAPI = async () => {
+    setListTableDuAn([...listTableDuAn, addProject]);
+    console.log(addProject);
+  };
+  // const listTableDuAn = [
+  //   {
+  //     id: "1",
+  //     project: "Dự án A",
+  //     manager: "Quản lý A",
+  //     budget: "Ngân sách A",
+  //     estimate: "Thời gian A",
+  //     state: "Trạng thái A",
+  //   },
+  //   {
+  //     id: "2",
+  //     project: "Dự án B",
+  //     manager: "Quản lý B",
+  //     budget: "Ngân sách B",
+  //     estimate: "Thời gian B",
+  //     state: "Trạng thái B",
+  //   },
+  //   {
+  //     id: "3",
+  //     project: "Dự án C",
+  //     manager: "Quản lý C",
+  //     budget: "Ngân sách C",
+  //     estimate: "Thời gian C",
+  //     state: "Trạng thái C",
+  //   },
+  //   {
+  //     id: "4",
+  //     project: "Dự án D",
+  //     manager: "Quản lý D",
+  //     budget: "Ngân sách D",
+  //     estimate: "Thời gian D",
+  //     state: "Trạng thái D",
+  //   },
+  //   {
+  //     id: "5",
+  //     project: "Dự án E",
+  //     manager: "Quản lý E",
+  //     budget: "Ngân sách E",
+  //     estimate: "Thời gian E",
+  //     state: "Trạng thái E",
+  //   },
+  // ].filter((item) => {
+  //   return item.project.toLowerCase().includes(valueSearch.toLowerCase());
+  // });
+
+  const [listTableDuAn, setListTableDuAn] = React.useState([]);
 
   const listDuAn = [
     {
@@ -89,17 +99,15 @@ const ManagerProject = () => {
   ];
 
   React.useEffect(() => {
+    dispatch(setIsShow(true));
     request
-      .get("/api/project/management/admin/project", {
-        headers: {
-          Authorization: "Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=",
-        },
-      })
+      .get("/api/project/management/admin/project?name=ProjectManage")
       .then((response) => {
-        console.log(response);
+        setListTableDuAn(response.data.data.list);
+        dispatch(setIsShow(false));
       })
       .catch((error) => {
-        console.log(error);
+        dispatch(setIsShow(false));
       });
   }, []);
 
@@ -168,7 +176,7 @@ const ManagerProject = () => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">
-                Tạo dự án
+                Sửa dự án
               </h1>
               <button
                 type="button"
@@ -178,16 +186,75 @@ const ManagerProject = () => {
               ></button>
             </div>
             <div className="modal-body">
-              <InputModal title="Tên dự án" />
+              <InputModal
+                value={addProject.name}
+                title="Tên dự án"
+                action={(e) => {
+                  setAddProject({ ...addProject, name: e.target.value });
+                }}
+              />
 
-              <InputModal title="Người quản lý" />
-              <InputModal title="Mô tả" />
+              <InputModal
+                value={addProject.createdBy}
+                title="Người quản lý"
+                action={(e) => {
+                  setAddProject({
+                    ...addProject,
+                    createdBy: e.target.value,
+                  });
+                }}
+              />
 
-              <InputModal title="Ngày hết hạn dự kiến" />
+              <InputModal
+                value={addProject.description}
+                title="Mô tả"
+                action={(e) => {
+                  setAddProject({
+                    ...addProject,
+                    description: e.target.value,
+                  });
+                }}
+              />
 
-              <InputModal title="Ngân sách dự kiến" />
+              <InputModal
+                value={addProject.startDate}
+                title="Ngày giao"
+                action={(e) => {
+                  setAddProject({ ...addProject, startDate: e.target.value });
+                }}
+              />
 
-              <InputModal title="Quá trình phát triển dự án" />
+              <InputModal
+                value={addProject.endDate}
+                title="Ngày hết hạn dự kiến"
+                action={(e) => {
+                  setAddProject({ ...addProject, endDate: e.target.value });
+                }}
+              />
+
+              <InputModal
+                value={addProject.budget}
+                title="Ngân sách dự kiến"
+                action={(e) => {
+                  setAddProject({ ...addProject, budget: e.target.value });
+                }}
+              />
+
+              <InputModal
+                value={addProject.priority}
+                title="Độ ưu tiên"
+                action={(e) => {
+                  setAddProject({ ...addProject, priority: e.target.value });
+                }}
+              />
+
+              <InputModal
+                value={addProject.status}
+                title="Trạng thái"
+                action={(e) => {
+                  setAddProject({ ...addProject, status: e.target.value });
+                }}
+              />
             </div>
             <div className="modal-footer">
               <button
@@ -200,9 +267,10 @@ const ManagerProject = () => {
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={() => console.log()}
+                data-bs-dismiss="modal"
+                onClick={() => addAPI()}
               >
-                Tạo
+                Thêm
               </button>
             </div>
           </div>

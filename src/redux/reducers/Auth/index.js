@@ -6,7 +6,7 @@ export const authSlice = createSlice({
     token: localStorage.getItem("token") || "",
     email: "",
     fullName: "",
-    roles: [],
+    roles: localStorage.getItem("roles") || [],
     user_id: 0,
     colorAccent: "F0F1F3",
   },
@@ -21,6 +21,7 @@ export const authSlice = createSlice({
       state.roles = payload.payload.roles;
       state.user_id = payload.payload.user_id;
       localStorage.setItem("token", JSON.stringify(state.token));
+      localStorage.setItem("roles", state.roles);
     },
     logout: (state) => {
       state.token = "";
@@ -29,6 +30,7 @@ export const authSlice = createSlice({
       state.roles = [];
       state.user_id = 0;
       localStorage.setItem("token", JSON.stringify(""));
+      localStorage.setItem("roles", []);
     },
   },
 });

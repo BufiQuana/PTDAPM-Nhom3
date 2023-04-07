@@ -5,60 +5,89 @@ import TableManagerTeam from "../../../components/ManagerTeam/TableManagerTeam";
 import InputModal from "../../../components/InputModal";
 import { ASSETS } from "../../../constants/ASSETS";
 import "./style.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsShow } from "../../../redux/reducers/Loading";
+import { request } from "../../../api/config";
 
 const ManagerTeam = () => {
   const valueSearch = useSelector((state) => {
     return state.navbarSearch.value;
   });
 
-  const listThanhVien = [
-    {
-      id: "1",
-      name: "A",
-      address: "A@gmail.com",
-      phone: "0123456789",
-      point: "10",
-      job: "BA",
-    },
-    {
-      id: "2",
-      name: "B",
-      address: "B@gmail.com",
-      phone: "0123456789",
-      point: "9.5",
-      job: "PO",
-    },
-    {
-      id: "3",
-      name: "C",
-      address: "C@gmail.com",
-      phone: "0123456789",
-      point: "9",
-      job: "Dev FE",
-    },
-    {
-      id: "4",
-      name: "D",
-      address: "D@gmail.com",
-      phone: "0123456789",
-      point: "8.5",
-      job: "Dev BE",
-    },
-    {
-      id: "5",
-      name: "E",
-      address: "E@gmail.com",
-      phone: "0123456789",
-      point: "8",
-      job: "Tester",
-    },
-  ].filter((item) => {
-    return item.name.toLowerCase().includes(valueSearch.toLowerCase());
-  });
+  const dispatch = useDispatch();
+
+  const [listThanhVien, setListThanhVien] = React.useState([]);
+
+  React.useEffect(() => {
+    dispatch(setIsShow(true));
+    request
+      .get("/api/project/management/admin/user")
+      .then((response) => {
+        const list = response.data.data.list;
+        const listFiltered = list.filter((item) => {
+          const rolesCode = item.roles.map((role) => {
+            return role.code;
+          });
+          if (rolesCode.includes("ADMIN")) return false;
+          if (rolesCode.includes("MANAGER")) return false;
+          if (rolesCode.includes("STAFF")) return true;
+        });
+        setListThanhVien(listFiltered);
+        dispatch(setIsShow(false));
+      })
+      .catch((error) => {
+        dispatch(setIsShow(false));
+      });
+  }, []);
+
+  // const listThanhVien = [
+  //   {
+  //     id: "1",
+  //     name: "A",
+  //     address: "A@gmail.com",
+  //     phone: "0123456789",
+  //     point: "10",
+  //     job: "BA",
+  //   },
+  //   {
+  //     id: "2",
+  //     name: "B",
+  //     address: "B@gmail.com",
+  //     phone: "0123456789",
+  //     point: "9.5",
+  //     job: "PO",
+  //   },
+  //   {
+  //     id: "3",
+  //     name: "C",
+  //     address: "C@gmail.com",
+  //     phone: "0123456789",
+  //     point: "9",
+  //     job: "Dev FE",
+  //   },
+  //   {
+  //     id: "4",
+  //     name: "D",
+  //     address: "D@gmail.com",
+  //     phone: "0123456789",
+  //     point: "8.5",
+  //     job: "Dev BE",
+  //   },
+  //   {
+  //     id: "5",
+  //     name: "E",
+  //     address: "E@gmail.com",
+  //     phone: "0123456789",
+  //     point: "8",
+  //     job: "Tester",
+  //   },
+  // ].filter((item) => {
+  //   return item.name.toLowerCase().includes(valueSearch.toLowerCase());
+  // });
 
   const [thanhvien, setThanhvien] = React.useState({
-    name: "",
+    email: "",
+    fullName: "",
     address: "",
     phone: "",
     point: "",
@@ -127,13 +156,13 @@ const ManagerTeam = () => {
                 <p className="fw-semibold mb-4 text-nowrap">
                   Thông tin thành viên
                 </p>
-                <div
+                {/* <div
                   className="mb-4 col-12 col-lg-3 col-xl-2 btn btn-primary text-nowrap"
                   data-bs-toggle="modal"
                   data-bs-target="#addThanhVien"
                 >
                   <p>Thêm thành viên</p>
-                </div>
+                </div> */}
               </div>
               <TableManagerTeam
                 list={listThanhVien}

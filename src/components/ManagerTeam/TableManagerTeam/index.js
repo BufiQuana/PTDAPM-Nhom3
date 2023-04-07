@@ -18,20 +18,23 @@ const TableManagerTeam = (props) => {
               <td scope="col">Số điện thoại</td>
               <td scope="col">Số điểm</td>
               <td scope="col">Công việc</td>
-              <td scope="col"></td>
-              <td scope="col"></td>
+              <td scope="col">Báo cáo</td>
+              {/* <td scope="col"></td>
+              <td scope="col"></td> */}
             </tr>
-            {props.list.map((item) => {
+            {props.list.map((item, i) => {
               return (
-                <tr className="align-middle fw-semibold" key={item.id}>
-                  <td style={{ minWidth: 70 }}>{item.id}</td>
-                  <td style={{ minWidth: 180 }}>{item.name}</td>
+                <tr className="align-middle fw-semibold" key={i}>
+                  <td style={{ minWidth: 70 }}>{i + 1}</td>
+                  <td style={{ minWidth: 180 }}>{item.fullName}</td>
                   <td style={{ minWidth: 180 }}>{item.address}</td>
                   <td style={{ minWidth: 130 }}>{item.phone}</td>
                   <td style={{ minWidth: 130 }}>{item.point}</td>
                   <td style={{ minWidth: 80 }}>{item.job}</td>
-                  <td style={{ minWidth: 80 }} className="text-success">
-                    {/* <Link to="/manager/team/edit">Sửa</Link> */}
+                  <td style={{ minWidth: 80 }}>
+                    <div className="btn btn-primary">Chi tiết</div>
+                  </td>
+                  {/* <td style={{ minWidth: 80 }} className="text-success">
 
                     <button
                       type="button"
@@ -42,9 +45,8 @@ const TableManagerTeam = (props) => {
                     >
                       Sửa
                     </button>
-                  </td>
-                  <td style={{ minWidth: 100 }} className="">
-                    {/* <Link to="/manager/team/delete">Xóa</Link> */}
+                  </td> */}
+                  {/* <td style={{ minWidth: 100 }} className="">
                     <button
                       type="button"
                       className="btn text-danger fw-semibold"
@@ -54,7 +56,7 @@ const TableManagerTeam = (props) => {
                     >
                       Xoá
                     </button>
-                  </td>
+                  </td> */}
                 </tr>
               );
             })}

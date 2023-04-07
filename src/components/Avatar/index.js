@@ -11,7 +11,8 @@ const Avatar = (props) => {
   return (
     <div className={`d-none-mobile avatar ${props.className}`}>
       <img
-        src={props.image || ASSETS.avatar}
+        // src={props.image || ASSETS.avatar}
+        src="https://images.unsplash.com/photo-1679419510159-bd45f61e27d0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=40&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY4MDg1NTI3NQ&ixlib=rb-4.0.3&q=80&w=40"
         width="40"
         height="40"
         className="img-fluid rounded-circle"

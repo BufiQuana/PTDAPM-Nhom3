@@ -7,12 +7,21 @@ import DetailMission from "../../../components/Detail/DetailMission";
 import InputModal from "../../../components/InputModal";
 import Template from "../../../components/Template";
 import "./style.css";
+import { useDispatch } from "react-redux";
+import { setIsShow } from "../../../redux/reducers/Loading";
+import { request } from "../../../api/config";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 const ProjectDetail = () => {
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [overview, setOverview] = React.useState(location.state);
+
   const listContentDetail = [
     {
       title: "Dự án tổng quan",
-      component: <DetailOverview />,
+      component: <DetailOverview overview={overview} />,
     },
     {
       title: "Danh sách nhiệm vụ",
@@ -31,8 +40,43 @@ const ProjectDetail = () => {
 
   const [currentContent, setCurrentContent] = React.useState({
     title: "Dự án tổng quan",
-    component: <DetailOverview />,
+    component: <DetailOverview overview={overview} />,
   });
+
+  React.useEffect(() => {
+    switch (currentContent.title) {
+      case "Dự án tổng quan":
+        setCurrentContent({
+          ...currentContent,
+          component: <DetailOverview overview={overview} />,
+        });
+      default:
+        break;
+    }
+  }, [overview]);
+
+  const [editProject, setEditProject] = React.useState(overview);
+
+  const editAPI = async () => {
+    setOverview(editProject);
+    dispatch(setIsShow(true));
+    request
+      .put(`/api/project/management/admin/project/${overview.id}`, editProject)
+      .then((response) => {
+        setOverview(editProject);
+        dispatch(setIsShow(false));
+      })
+      .catch((error) => {
+        dispatch(setIsShow(false));
+      });
+  };
+
+  const deleteAPI = async () => {
+    request
+      .delete(`/api/project/management/admin/project/${overview.id}`)
+      .then((response) => {})
+      .catch((error) => {});
+  };
 
   return (
     <Template>
@@ -106,16 +150,76 @@ const ProjectDetail = () => {
               ></button>
             </div>
             <div className="modal-body">
-              <InputModal title="Tên dự án" />
+              <InputModal
+                value={editProject.name}
+                title="Tên dự án"
+                action={(e) => {
+                  setEditProject({ ...editProject, name: e.target.value });
+                }}
+              />
 
-              <InputModal title="Người quản lý" />
-              <InputModal title="Mô tả" />
+              <InputModal
+                value={editProject.createdBy}
+                title="Người quản lý"
+                action={(e) => {
+                  setEditProject({
+                    ...editProject,
+                    createdBy: e.target.value,
+                  });
+                }}
+                disabled
+              />
 
-              <InputModal title="Ngày hết hạn dự kiến" />
+              <InputModal
+                value={editProject.description}
+                title="Mô tả"
+                action={(e) => {
+                  setEditProject({
+                    ...editProject,
+                    description: e.target.value,
+                  });
+                }}
+              />
 
-              <InputModal title="Ngân sách dự kiến" />
+              <InputModal
+                value={editProject.startDate}
+                title="Ngày giao"
+                action={(e) => {
+                  setEditProject({ ...editProject, startDate: e.target.value });
+                }}
+              />
 
-              <InputModal title="Quá trình phát triển dự án" />
+              <InputModal
+                value={editProject.endDate}
+                title="Ngày hết hạn dự kiến"
+                action={(e) => {
+                  setEditProject({ ...editProject, endDate: e.target.value });
+                }}
+              />
+
+              <InputModal
+                value={editProject.budget}
+                title="Ngân sách dự kiến"
+                action={(e) => {
+                  setEditProject({ ...editProject, budget: e.target.value });
+                }}
+              />
+
+              <InputModal
+                value={editProject.priority}
+                title="Độ ưu tiên"
+                action={(e) => {
+                  setEditProject({ ...editProject, priority: e.target.value });
+                }}
+              />
+
+              <InputModal
+                value={editProject.status}
+                title="Trạng thái"
+                action={(e) => {
+                  setEditProject({ ...editProject, status: e.target.value });
+                }}
+              />
             </div>
             <div className="modal-footer">
               <button
@@ -128,7 +232,8 @@ const ProjectDetail = () => {
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={() => console.log()}
+                data-bs-dismiss="modal"
+                onClick={() => editAPI()}
               >
                 Sửa
               </button>
@@ -145,7 +250,7 @@ const ProjectDetail = () => {
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
-            <div className="modal-header d-block">
+            <div className="modal-header d-block border-0">
               <h1
                 className="modal-title fs-5 text-center"
                 id="exampleModalLabel"
@@ -153,10 +258,10 @@ const ProjectDetail = () => {
                 Xoá dự án
               </h1>
             </div>
-            <div className="modal-body">
+            <div className="modal-body text-center">
               Bạn có chắc chắn muốn xóa dự án này không ?
             </div>
-            <div className="modal-footer justify-content-evenly">
+            <div className="modal-footer justify-content-evenly border-0">
               <button
                 type="button"
                 className="btn btn-secondary"
@@ -167,7 +272,10 @@ const ProjectDetail = () => {
               <button
                 type="button"
                 className="btn btn-danger"
-                onClick={() => console.log()}
+                onClick={() => {
+                  deleteAPI();
+                  navigate(-1);
+                }}
               >
                 Xoá
               </button>

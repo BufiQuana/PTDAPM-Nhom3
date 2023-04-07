@@ -23,15 +23,17 @@ const TableManagerProject = (props) => {
             return (
               <tr className="align-middle fw-semibold" key={item.id}>
                 <td style={{ minWidth: 70 }}>{item.id}</td>
-                <td style={{ minWidth: 180 }}>{item.project}</td>
-                <td style={{ minWidth: 180 }}>{item.manager}</td>
+                <td style={{ minWidth: 180 }}>{item.name}</td>
+                <td style={{ minWidth: 180 }}>{item.createdBy}</td>
                 <td style={{ minWidth: 130 }}>{item.budget}</td>
-                <td style={{ minWidth: 130 }}>{item.estimate}</td>
+                <td style={{ minWidth: 130 }}>{item.startDate}</td>
                 <td style={{ minWidth: 130 }} className="text-success">
-                  {item.state}
+                  {item.status}
                 </td>
                 <td style={{ minWidth: 100 }} className="">
-                  <Link to="/manager/project/detail">Chi tiết</Link>
+                  <Link to={`/manager/project/${item.id}`} state={item}>
+                    Chi tiết
+                  </Link>
                   {/* <a href="/manager/project/detail">Chi tiết</a> */}
                 </td>
               </tr>

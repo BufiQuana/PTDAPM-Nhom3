@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Link,
   useLocation,
@@ -16,32 +16,62 @@ const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const listSidebarItem = [
-    {
-      title: "Trang chủ",
-      icon: ASSETS.icHome,
-      iconAcitve: ASSETS.icHomeActive,
-      href: "/",
-    },
-    {
-      title: "Quản lý dự án",
-      icon: ASSETS.icSuppliers,
-      iconAcitve: ASSETS.icSuppliersActive,
-      href: "/manager/project",
-    },
-    {
-      title: "Quản lý thời gian",
-      icon: ASSETS.icReport,
-      iconAcitve: ASSETS.icReportActive,
-      href: "/manager/time",
-    },
-    {
-      title: "Quản lý thành viên",
-      icon: ASSETS.icInventory,
-      iconAcitve: ASSETS.icInventoryActive,
-      href: "/manager/team",
-    },
-  ];
+  const role = useSelector((state) => {
+    if (state.auth.roles.includes("ROLE_ADMIN")) {
+      return "admin";
+    }
+    if (state.auth.roles.includes("ROLE_MANAGER")) {
+      return "manager";
+    }
+    if (state.auth.roles.includes("ROLE_STAFF")) {
+      return "staff";
+    }
+
+    return "admin";
+  });
+
+  const listSidebarItem =
+    role === "admin"
+      ? [
+          {
+            title: "Trang chủ",
+            icon: ASSETS.icHome,
+            iconAcitve: ASSETS.icHomeActive,
+            href: "/",
+          },
+          {
+            title: "Quản lý dự án",
+            icon: ASSETS.icSuppliers,
+            iconAcitve: ASSETS.icSuppliersActive,
+            href: "/manager/project",
+          },
+          {
+            title: "Quản lý thời gian",
+            icon: ASSETS.icReport,
+            iconAcitve: ASSETS.icReportActive,
+            href: "/Time",
+          },
+          {
+            title: "Quản lý thành viên",
+            icon: ASSETS.icInventory,
+            iconAcitve: ASSETS.icInventoryActive,
+            href: "/manager/team",
+          },
+        ]
+      : [
+          {
+            title: "Trang chủ",
+            icon: ASSETS.icHome,
+            iconAcitve: ASSETS.icHomeActive,
+            href: "/",
+          },
+          {
+            title: "Báo cáo công việc",
+            icon: ASSETS.icHome,
+            iconAcitve: ASSETS.icHomeActive,
+            href: "/staff/report",
+          },
+        ];
 
   const listSidebarItemBelow = [
     {
