@@ -5,6 +5,7 @@ import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import CardSchedule from "../../CardSchedule";
 import "./style.css";
+import { request } from "../../../api/config";
 
 const DetailSchedule = () => {
   const [createSchedule, setCreateSchedule] = React.useState({
@@ -20,39 +21,50 @@ const DetailSchedule = () => {
   const [value, onChange] = React.useState(new Date());
   const [valueTime, onChangeTime] = React.useState("10:00");
 
-  const listScheduleA = [
-    {
-      id: "A",
-      title: "Schedule A",
-      description: "Description A",
-      place: "Place A",
-      date: new Date(),
-      timeStart: "12:00",
-      timeEnd: "12:30",
-    },
-    {
-      id: "B",
-      title: "Schedule B",
-      description: "Description B",
-      place: "Place B",
-      date: "10/30/2023",
-      timeStart: "12:00",
-      timeEnd: "13:15",
-    },
-    {
-      id: "C",
-      title: "Schedule C",
-      description: "Description C",
-      place: "Place C",
-      date: "02/21/2023",
-      timeStart: "12:00",
-      timeEnd: "16:00",
-    },
-  ];
+  // const listScheduleA = [
+  //   {
+  //     id: "A",
+  //     title: "Schedule A",
+  //     description: "Description A",
+  //     place: "Place A",
+  //     date: new Date(),
+  //     timeStart: "12:00",
+  //     timeEnd: "12:30",
+  //   },
+  //   {
+  //     id: "B",
+  //     title: "Schedule B",
+  //     description: "Description B",
+  //     place: "Place B",
+  //     date: "10/30/2023",
+  //     timeStart: "12:00",
+  //     timeEnd: "13:15",
+  //   },
+  //   {
+  //     id: "C",
+  //     title: "Schedule C",
+  //     description: "Description C",
+  //     place: "Place C",
+  //     date: "02/21/2023",
+  //     timeStart: "12:00",
+  //     timeEnd: "16:00",
+  //   },
+  // ];
 
-  const listScheduleB = [];
+  const [listSchedule, setListSchedule] = React.useState([]);
 
-  const [listSchedule, setListSchedule] = React.useState(listScheduleA);
+  React.useEffect(() => {
+    request
+      .get(
+        "https://server.6figurespos.com/gateway/api/project/management/admin/schedule/project/1"
+      )
+      .then((response) => {
+        setListSchedule(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <>

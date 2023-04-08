@@ -33,7 +33,6 @@ const CardTask = (props) => {
   );
 
   const handleKeyDown = (event) => {
-    console.log("Test");
     if (event.key === "Enter") {
       setTaskComments([...taskComments, inputComment]);
       request

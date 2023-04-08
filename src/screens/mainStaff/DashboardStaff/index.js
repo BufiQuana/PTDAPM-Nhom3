@@ -38,16 +38,16 @@ const DashboardStaff = () => {
   ];
 
   React.useEffect(() => {
-    // dispatch(setIsShow(true));
-    // request
-    //   .get("/api/project/management/admin/project")
-    //   .then((response) => {
-    //     console.log(response.data.data.list);
-    //     dispatch(setIsShow(false));
-    //   })
-    //   .catch((error) => {
-    //     dispatch(setIsShow(false));
-    //   });
+    dispatch(setIsShow(true));
+    request
+      .get("/api/project/management/admin/project")
+      .then((response) => {
+        console.log(response.data.data.list);
+        dispatch(setIsShow(false));
+      })
+      .catch((error) => {
+        dispatch(setIsShow(false));
+      });
   }, []);
 
   return (

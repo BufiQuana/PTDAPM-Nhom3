@@ -138,6 +138,29 @@ const DetailMission = (props) => {
     );
   }, [props.list]);
 
+  const [listThanhVien, setListThanhVien] = React.useState([]);
+
+  React.useEffect(() => {
+    request
+      .get("/api/project/management/admin/user")
+      .then((response) => {
+        const list = response.data.data.list;
+        const listFiltered = list.filter((item) => {
+          const rolesCode = item.roles.map((role) => {
+            return role.code;
+          });
+          if (rolesCode.includes("ADMIN")) return false;
+          if (rolesCode.includes("MANAGER")) return false;
+          if (rolesCode.includes("STAFF")) return true;
+        });
+        const listFilteredStaff = listFiltered.map((item) => {
+          return { ...item, label: item.fullName, value: item.fullName };
+        });
+        setListThanhVien(listFilteredStaff);
+      })
+      .catch((error) => {});
+  }, []);
+
   const [startDate, setStartDate] = React.useState(new Date());
 
   const options = [
@@ -386,7 +409,8 @@ const DetailMission = (props) => {
                       }}
                       defaultValue={selectedOption}
                       onChange={setSelectedOption}
-                      options={options}
+                      // options={options}
+                      options={listThanhVien}
                       isMulti
                       closeMenuOnSelect={false}
                       noOptionsMessage={() => {
