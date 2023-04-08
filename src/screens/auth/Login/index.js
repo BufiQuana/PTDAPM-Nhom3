@@ -30,6 +30,7 @@ const Login = () => {
         messagePassword: state.password ? "" : "Hãy nhập mật khẩu",
       });
     } else {
+      console.log("login");
       request
         .post(
           "/api/project/management/user/login",
@@ -48,9 +49,11 @@ const Login = () => {
           }
         )
         .then((response) => {
+          console.log("login success");
           dispatch(login(response.data));
         })
         .catch((error) => {
+          console.log("login error",error);
           if (state.username && state.password) {
             setMessageValidate({
               messageUsername: "Sai tài khoản hoặc mật khẩu hãy nhập lại",
@@ -150,9 +153,10 @@ const Login = () => {
             {/* <p className="fw-semibold ms-2 text-primary">Quên mật khẩu?</p> */}
           </div>
           <div
-            onClick={() => {
-              onLogin();
-            }}
+            // onClick={() => {
+            //   onLogin();
+            // }}
+            onClick={onLogin}
             className="btn btn-primary w-100 my-md-3 my-3 btnDangNhap d-inline-flex align-items-center justify-content-center fs-5"
           >
             Đăng nhập
