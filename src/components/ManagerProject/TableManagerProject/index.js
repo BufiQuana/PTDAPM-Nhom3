@@ -11,7 +11,7 @@ const TableManagerProject = (props) => {
         <thead></thead>
         <tbody>
           <tr className="align-middle">
-            <td scope="col">ID</td>
+            <td scope="col">STT</td>
             <td scope="col">Tên dự án</td>
             <td scope="col">Người quản lý</td>
             <td scope="col">Ngân sách dự kiến</td>
@@ -19,10 +19,10 @@ const TableManagerProject = (props) => {
             <td scope="col">Trạng thái</td>
             <td scope="col">Hoạt động</td>
           </tr>
-          {props.list.map((item) => {
+          {props.list.map((item, i) => {
             return (
               <tr className="align-middle fw-semibold" key={item.id}>
-                <td style={{ minWidth: 70 }}>{item.id}</td>
+                <td style={{ minWidth: 70 }}>{i + 1}</td>
                 <td style={{ minWidth: 180 }}>{item.name}</td>
                 <td style={{ minWidth: 180 }}>{item.createdBy}</td>
                 <td style={{ minWidth: 130 }}>{item.budget}</td>

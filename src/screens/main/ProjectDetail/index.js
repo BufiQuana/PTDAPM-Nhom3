@@ -17,6 +17,7 @@ const ProjectDetail = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [overview, setOverview] = React.useState(location.state);
+  const [listTask, setListTask] = React.useState([]);
 
   const listContentDetail = [
     {
@@ -25,7 +26,7 @@ const ProjectDetail = () => {
     },
     {
       title: "Danh sách nhiệm vụ",
-      component: <DetailMission />,
+      component: <DetailMission list={listTask} projectId={overview.id} />,
     },
     {
       title: "Lịch họp",
@@ -44,16 +45,29 @@ const ProjectDetail = () => {
   });
 
   React.useEffect(() => {
-    switch (currentContent.title) {
-      case "Dự án tổng quan":
-        setCurrentContent({
-          ...currentContent,
-          component: <DetailOverview overview={overview} />,
-        });
-      default:
-        break;
+    if (currentContent.title === "Dự án tổng quan") {
+      setCurrentContent({
+        ...currentContent,
+        component: <DetailOverview overview={overview} />,
+      });
     }
-  }, [overview]);
+
+    if (currentContent.title === "Danh sách nhiệm vụ") {
+      setCurrentContent({
+        ...currentContent,
+        component: <DetailMission list={listTask} projectId={overview.id} />,
+      });
+    }
+  }, [overview, listTask]);
+
+  React.useEffect(() => {
+    request
+      .get(`/api/project/management/admin/project/${overview.id}`)
+      .then((response) => {
+        setListTask(response.data.data.tasks);
+      })
+      .catch((error) => {});
+  }, []);
 
   const [editProject, setEditProject] = React.useState(overview);
 

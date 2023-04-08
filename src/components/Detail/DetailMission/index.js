@@ -8,89 +8,136 @@ import "react-quill/dist/quill.snow.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
+import { request } from "../../../api/config";
 
-const DetailMission = () => {
-  const listTaskTodo = [
-    {
-      id: "1",
-      title: "Task A",
-      description: "Description A",
-      dateEnd: "Date A",
-      assignee: "Person A",
-      priority: "high",
-      image: ASSETS.imageCat,
-      comments: [
-        {
-          userId: "1",
-          userAvatar: ASSETS.avatar,
-          content: "Comment A",
-        },
-        {
-          userId: "2",
-          userAvatar: ASSETS.avatar,
-          content: "Comment B",
-        },
-      ],
-    },
-    {
-      id: "2",
-      title: "Task B",
-      description: "Description B",
-      dateEnd: "Date B",
-      assignee: "Person B",
-      priority: "medium",
-      image: null,
-      comments: [],
-    },
-  ];
+const DetailMission = (props) => {
+  // const listTaskTodo = [
+  //   {
+  //     id: "1",
+  //     title: "Task A",
+  //     description: "Description A",
+  //     dateEnd: "Date A",
+  //     assignee: "Person A",
+  //     priority: "high",
+  //     image: ASSETS.imageCat,
+  //     comments: [
+  //       {
+  //         userId: "1",
+  //         userAvatar: ASSETS.avatar,
+  //         content: "Comment A",
+  //       },
+  //       {
+  //         userId: "2",
+  //         userAvatar: ASSETS.avatar,
+  //         content: "Comment B",
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     id: "2",
+  //     title: "Task B",
+  //     description: "Description B",
+  //     dateEnd: "Date B",
+  //     assignee: "Person B",
+  //     priority: "medium",
+  //     image: null,
+  //     comments: [],
+  //   },
+  // ];
 
-  const listTaskInProgress = [
-    {
-      id: "3",
-      title: "Task C",
-      description: "Description C",
-      dateEnd: "Date C",
-      assignee: "Person C",
-      priority: "low",
-      image: null,
-      comments: [],
-    },
-    {
-      id: "4",
-      title: "Task D",
-      description: "Description D",
-      dateEnd: "Date D",
-      assignee: "Person D",
-      priority: "medium",
-      image: null,
-      comments: [],
-    },
-  ];
+  // const listTaskInProgress = [
+  //   {
+  //     id: "3",
+  //     title: "Task C",
+  //     description: "Description C",
+  //     dateEnd: "Date C",
+  //     assignee: "Person C",
+  //     priority: "low",
+  //     image: null,
+  //     comments: [],
+  //   },
+  //   {
+  //     id: "4",
+  //     title: "Task D",
+  //     description: "Description D",
+  //     dateEnd: "Date D",
+  //     assignee: "Person D",
+  //     priority: "medium",
+  //     image: null,
+  //     comments: [],
+  //   },
+  // ];
 
-  const listTaskTesting = [
-    {
-      id: "5",
-      title: "Task E",
-      description: "Description E",
-      dateEnd: "Date E",
-      assignee: "Person E",
-      priority: "high",
-      image: null,
-      comments: [],
-    },
-    {
-      id: "6",
-      title: "Task F",
-      description: "Description F",
-      dateEnd: "Date F",
-      assignee: "Person F",
-      priority: "medium",
-      image: ASSETS.imageCat2,
-      comments: [],
-    },
-  ];
+  // const listTaskTesting = [
+  //   {
+  //     id: "5",
+  //     title: "Task E",
+  //     description: "Description E",
+  //     dateEnd: "Date E",
+  //     assignee: "Person E",
+  //     priority: "high",
+  //     image: null,
+  //     comments: [],
+  //   },
+  //   {
+  //     id: "6",
+  //     title: "Task F",
+  //     description: "Description F",
+  //     dateEnd: "Date F",
+  //     assignee: "Person F",
+  //     priority: "medium",
+  //     image: ASSETS.imageCat2,
+  //     comments: [],
+  //   },
+  // ];
 
-  const [overviewValue, setOverviewValue] = React.useState("");
+  const [listTaskTodo, setListTaskTodo] = React.useState(
+    props.list.filter((task) => {
+      return task.status === "Cần làm";
+    })
+  );
+
+  const [listTaskInProgress, setListTaskInProgress] = React.useState(
+    props.list.filter((task) => {
+      return task.status === "Đang làm";
+    })
+  );
+
+  const [listTaskTesting, setListTaskTesting] = React.useState(
+    props.list.filter((task) => {
+      return task.status === "Kiểm thử";
+    })
+  );
+
+  const [listTaskDone, setListTaskDone] = React.useState(
+    props.list.filter((task) => {
+      return task.status === "Hoàn thành";
+    })
+  );
+
+  React.useEffect(() => {
+    setListTaskTodo(
+      props.list.filter((task) => {
+        return task.status === "Cần làm";
+      })
+    );
+    setListTaskInProgress(
+      props.list.filter((task) => {
+        return task.status === "Đang làm";
+      })
+    );
+    setListTaskTesting(
+      props.list.filter((task) => {
+        return task.status === "Kiểm thử";
+      })
+    );
+    setListTaskDone(
+      props.list.filter((task) => {
+        return task.status === "Hoàn thành";
+      })
+    );
+  }, [props.list]);
+
   const [startDate, setStartDate] = React.useState(new Date());
 
   const options = [
@@ -115,14 +162,46 @@ const DetailMission = () => {
   });
 
   const optionsPriority = [
-    { value: "high", label: "High" },
-    { value: "medium", label: "Medium" },
-    { value: "low", label: "Low" },
+    { value: "HIGH_LEVEL", label: "High" },
+    { value: "AVARAGE_LEVEL", label: "Medium" },
+    { value: "LOW_LEVEL", label: "Low" },
   ];
 
   const [selectedOption, setSelectedOption] = React.useState(null);
-  const [selectedOptionPriority, setSelectedOptionPriority] =
-    React.useState(null);
+
+  const [addTask, setAddTask] = React.useState({
+    taskName: "",
+    description: "",
+    status: "",
+    priority: "",
+    projectId: props.projectId,
+  });
+
+  const addTaskAPI = async () => {
+    if (addTask.status === "Cần làm") {
+      setListTaskTodo([...listTaskTodo, addTask]);
+    }
+    if (addTask.status === "Đang làm") {
+      setListTaskInProgress([...listTaskInProgress, addTask]);
+    }
+    if (addTask.status === "Kiểm thử") {
+      setListTaskTesting([...listTaskTesting, addTask]);
+    }
+    if (addTask.status === "Hoàn thành") {
+      setListTaskDone([...listTaskDone, addTask]);
+    }
+    request
+      .post(
+        "https://server.6figurespos.com/gateway/api/project/management/admin/projectTask",
+        addTask
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="px-4 pt-3">
@@ -134,11 +213,14 @@ const DetailMission = () => {
               className="fa fa-plus"
               data-bs-toggle="modal"
               data-bs-target="#addCard"
+              onClick={() => {
+                setAddTask({ ...addTask, status: "Cần làm" });
+              }}
             ></i>
           </div>
           <div className="d-flex flex-column">
-            {listTaskTodo.map((item) => {
-              return <CardTask task={item} key={item.id} />;
+            {listTaskTodo.map((item, i) => {
+              return <CardTask task={item} key={i} />;
             })}
           </div>
         </div>
@@ -149,11 +231,14 @@ const DetailMission = () => {
               className="fa fa-plus"
               data-bs-toggle="modal"
               data-bs-target="#addCard"
+              onClick={() => {
+                setAddTask({ ...addTask, status: "Đang làm" });
+              }}
             ></i>
           </div>
           <div className="d-flex flex-column">
-            {listTaskInProgress.map((item) => {
-              return <CardTask task={item} key={item.id} />;
+            {listTaskInProgress.map((item, i) => {
+              return <CardTask task={item} key={i} />;
             })}
           </div>
         </div>
@@ -164,11 +249,14 @@ const DetailMission = () => {
               className="fa fa-plus"
               data-bs-toggle="modal"
               data-bs-target="#addCard"
+              onClick={() => {
+                setAddTask({ ...addTask, status: "Kiểm thử" });
+              }}
             ></i>
           </div>
           <div className="d-flex flex-column">
-            {listTaskTesting.map((item) => {
-              return <CardTask task={item} key={item.id} />;
+            {listTaskTesting.map((item, i) => {
+              return <CardTask task={item} key={i} />;
             })}
           </div>
         </div>
@@ -179,11 +267,15 @@ const DetailMission = () => {
               className="fa fa-plus"
               data-bs-toggle="modal"
               data-bs-target="#addCard"
+              onClick={() => {
+                setAddTask({ ...addTask, status: "Hoàn thành" });
+              }}
             ></i>
           </div>
           <div className="d-flex flex-column">
-            {/* <CardTask />
-            <CardTask /> */}
+            {listTaskDone.map((item, i) => {
+              return <CardTask task={item} key={i} />;
+            })}
           </div>
         </div>
       </div>
@@ -211,14 +303,33 @@ const DetailMission = () => {
             <div className="modal-body">
               <div className="modal-body">
                 <div className="d-flex align-items-top mb-2">
+                  <i className="fa fa-heading me-2 mt-1"></i>
+                  <p className="me-2 text-nowrap">Tiêu đề: </p>
+                </div>
+
+                <div className="mb-4">
+                  <input
+                    type="text"
+                    placeholder="Nhập tiêu đề"
+                    className="border rounded-1 ps-2 w-100"
+                    value={addTask.taskName}
+                    onChange={(e) => {
+                      setAddTask({ ...addTask, taskName: e.target.value });
+                    }}
+                  />
+                </div>
+
+                <div className="d-flex align-items-top mb-2">
                   <i className="fa fa-align-left me-2 mt-1"></i>
                   <p className="me-2 text-nowrap">Mô tả công việc: </p>
                 </div>
                 <ReactQuill
                   className="mb-4"
                   theme="snow"
-                  value={overviewValue}
-                  onChange={setOverviewValue}
+                  value={addTask.description}
+                  onChange={(value) => {
+                    setAddTask({ ...addTask, description: value });
+                  }}
                 />
                 <div className="d-flex align-items-top mb-2">
                   <i className="fa-regular fa-calendar me-2 mt-1"></i>
@@ -326,8 +437,10 @@ const DetailMission = () => {
                           height: "30px",
                         }),
                       }}
-                      defaultValue={selectedOptionPriority}
-                      onChange={setSelectedOptionPriority}
+                      defaultValue={addTask.priority}
+                      onChange={(target) => {
+                        setAddTask({ ...addTask, priority: target.value });
+                      }}
                       options={optionsPriority}
                     />
                   </div>
@@ -345,8 +458,9 @@ const DetailMission = () => {
               <button
                 type="button"
                 className="btn btn-primary"
+                data-bs-dismiss="modal"
                 onClick={() => {
-                  console.log(overviewValue);
+                  addTaskAPI();
                 }}
               >
                 Thêm
