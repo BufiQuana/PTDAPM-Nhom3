@@ -54,11 +54,8 @@ const Login = () => {
           console.log(response.data);
         })
         .catch((error) => {
-<<<<<<< HEAD
           console.log("login error",error);
-=======
           console.log(error);
->>>>>>> 73c65a315639cdb3cddf5dd218f02eb6bda3cd69
           if (state.username && state.password) {
             setMessageValidate({
               messageUsername: "Sai tài khoản hoặc mật khẩu hãy nhập lại",
