@@ -49,8 +49,10 @@ const Login = () => {
         )
         .then((response) => {
           dispatch(login(response.data));
+          console.log(response.data);
         })
         .catch((error) => {
+          console.log(error);
           if (state.username && state.password) {
             setMessageValidate({
               messageUsername: "Sai tài khoản hoặc mật khẩu hãy nhập lại",

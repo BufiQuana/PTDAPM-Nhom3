@@ -26,6 +26,7 @@ import ManagerResource from "../screens/main/ManagerResource";
 import ManagerCustomer from "../screens/main/ManagerCustomer";
 import DashboardStaff from "../screens/mainStaff/DashboardStaff";
 import ReportStaff from "../screens/mainStaff/ReportStaff";
+import ManagerBudget from "../screens/main/ManagerBudget";
 
 // import Manageresource from "../screens/main/Manageresource";
 // Newresource
@@ -60,6 +61,7 @@ export default () => {
             <Route path={"/manager/project"} element={<ManagerProject />} />
             <Route path={"/manager/team"} element={<ManagerTeam />} />
             <Route path={"/manager/time"} element={<ManagerTime />} />
+            <Route path={"/manager/budget"} element={<ManagerBudget />} />
             <Route path={"/manager/project/:id"} element={<ProjectDetail />} />
             <Route path={"/setting"} element={<Setting />} />
 
@@ -79,6 +81,7 @@ export default () => {
         ) : (
           <Routes>
             <Route path={"/"} element={<DashboardStaff />} />
+            <Route path={"/manager/project/:id"} element={<ProjectDetail />} />
             <Route path={"/staff/report"} element={<ReportStaff />} />
             <Route path={"/notfound"} element={<NotFound />} />
             <Route path={"*"} element={<Navigate to={"/notfound"} />} />

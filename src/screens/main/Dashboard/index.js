@@ -101,8 +101,8 @@ const Dashboard = () => {
         <div className="row g-4">
           <div className="col-12 col-xl-12">
             <div className="bg-light p-3 rounded-3 h-100 d-flex flex-column">
-              <div className="d-flex justify-content-between align-items-center">
-                <p className="fw-semibold mb-4">Dự án tổng quan</p>
+              <div className="d-flex justify-content-between align-items-center mb-4">
+                <p className="fw-semibold">Dự án tổng quan</p>
                 <Link to="/manager/project">Xem tất cả</Link>
               </div>
               <ListContentDashboard list={listDuAn} />
@@ -113,14 +113,14 @@ const Dashboard = () => {
             <div className="d-flex justify-content-between align-items-center">
             </div>  
             <ListContentDashboard list={listCongViec} />
-            <Link to="/">Xem tất cả</Link>
-            <p className="fw-semibold mb-4">Công việc</p>
+            <Lin to="/">Xem tất cả</Lin mb-4k>
+            <p className="fw-semibold">Công việc</p>
             </div>
           </div> */}
           <div className="col-12 col-xl-8">
             <div className="bg-light p-3 rounded-3 h-100 d-flex flex-column">
-              <div className="d-flex justify-content-between align-items-center">
-                <p className="fw-semibold mb-4">Tài nguyên</p>
+              <div className="d-flex justify-content-between align-items-center mb-4">
+                <p className="fw-semibold">Tài nguyên</p>
                 <Link to="/manager/resource">Xem tất cả</Link>
               </div>
               <ListContentDashboard list={listTaiNguyen} />
@@ -128,8 +128,8 @@ const Dashboard = () => {
           </div>
           <div className="col-12 col-xl-4">
             <div className="bg-light p-3 rounded-3 h-100 d-flex flex-column">
-              <div className="d-flex justify-content-between align-items-center">
-                <p className="fw-semibold mb-4">Báo cáo</p>
+              <div className="d-flex justify-content-between align-items-center mb-4">
+                <p className="fw-semibold">Báo cáo</p>
                 <Link to="/manager/report">Xem tất cả</Link>
               </div>
               <ListContentDashboard list={listBaoCao} />
@@ -137,7 +137,10 @@ const Dashboard = () => {
           </div>
           <div className="col-12 col-xl-8">
             <div className="bg-light p-3 rounded-3 h-100 d-flex flex-column overflow-scroll">
-              <p className="fw-semibold mb-4">Ngân sách</p>
+              <div className="d-flex align-items-center justify-content-between mb-4">
+                <p className="fw-semibold">Ngân sách</p>
+                <Link to="/manager/budget">Xem tất cả</Link>
+              </div>
               <ChartNganSach />
             </div>
           </div>
@@ -151,7 +154,7 @@ const Dashboard = () => {
             <div className="bg-light p-3 rounded-3 h-100 d-flex flex-column overflow-scroll">
               <div className="d-flex justify-content-between">
                 <p className="fw-semibold mb-4">Xếp hạng thành viên</p>
-                <a href="">Xem tất cả</a>
+                <Link to="/manager/team">Xem tất cả</Link>
               </div>
               <TableDashboard />
             </div>

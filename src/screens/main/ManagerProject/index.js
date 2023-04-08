@@ -14,11 +14,22 @@ const ManagerProject = () => {
     return state.navbarSearch.value;
   });
 
-  const [addProject, setAddProject] = React.useState({});
+  const [addProject, setAddProject] = React.useState({
+    memberIds: [5],
+  });
 
   const addAPI = async () => {
+    dispatch(setIsShow(true));
     setListTableDuAn([...listTableDuAn, addProject]);
     console.log(addProject);
+    request
+      .post("/api/project/management/admin/project", addProject)
+      .then((response) => {
+        dispatch(setIsShow(false));
+      })
+      .catch((error) => {
+        dispatch(setIsShow(false));
+      });
   };
   // const listTableDuAn = [
   //   {
@@ -101,7 +112,7 @@ const ManagerProject = () => {
   React.useEffect(() => {
     dispatch(setIsShow(true));
     request
-      .get("/api/project/management/admin/project?name=ProjectManage")
+      .get("/api/project/management/admin/project")
       .then((response) => {
         setListTableDuAn(response.data.data.list);
         dispatch(setIsShow(false));
