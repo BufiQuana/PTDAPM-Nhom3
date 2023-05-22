@@ -71,6 +71,8 @@ const ProjectDetail = () => {
       .get(`/api/project/management/admin/project/${params.id}`)
       .then((response) => {
         setListTask(response.data.data.tasks);
+        setOverview(response.data.data);
+        setEditProject(response.data.data);
       })
       .catch((error) => {});
     dispatch(setIsShow(true));
