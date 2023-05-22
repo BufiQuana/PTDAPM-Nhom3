@@ -73,7 +73,7 @@ const ProjectDetail = () => {
         setListTask(response.data.data.tasks);
       })
       .catch((error) => {});
-
+    dispatch(setIsShow(true));
     request
       .get("/api/project/management/admin/project")
       .then((response) => {
@@ -82,8 +82,12 @@ const ProjectDetail = () => {
         });
         console.log(list);
         setOverview(list[0]);
+        setEditProject(list[0]);
+        dispatch(setIsShow(false));
       })
-      .catch((error) => {});
+      .catch((error) => {
+        dispatch(setIsShow(false));
+      });
   }, []);
 
   const [editProject, setEditProject] = React.useState(overview);

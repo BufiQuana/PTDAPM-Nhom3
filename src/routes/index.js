@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
   Navigate,
@@ -28,11 +28,28 @@ import DashboardStaff from "../screens/mainStaff/DashboardStaff";
 import ReportStaff from "../screens/mainStaff/ReportStaff";
 import ManagerBudget from "../screens/main/ManagerBudget";
 import Schedule from "../screens/main/Schedule";
+import { logout } from "../redux/reducers/Auth";
+import { request } from "../api/config";
 
 // import Manageresource from "../screens/main/Manageresource";
 // Newresource
 
 export default () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    request.interceptors.response.use(
+      async (config) => {
+        return config;
+      },
+      (error) => {
+        if (error.response.status == 401) {
+          dispatch(logout());
+        }
+        return Promise.reject(error);
+      }
+    );
+  }, []);
   const token = useSelector((state) => {
     return state.auth.token;
   });

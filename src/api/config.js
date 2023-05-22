@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/reducers/Auth";
 
 const request = axios.create({
   baseURL: "https://server.6figurespos.com/gateway",
