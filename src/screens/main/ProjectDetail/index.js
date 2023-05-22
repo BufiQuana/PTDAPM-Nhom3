@@ -78,7 +78,7 @@ const ProjectDetail = () => {
       .get("/api/project/management/admin/project")
       .then((response) => {
         const list = response.data.data.list.filter((item) => {
-          return item.id === params.id;
+          return item.id == params.id;
         });
         console.log(list);
         setOverview(list[0]);
