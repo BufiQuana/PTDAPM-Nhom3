@@ -6,65 +6,111 @@ import "react-time-picker/dist/TimePicker.css";
 import CardSchedule from "../../CardSchedule";
 import "./style.css";
 import { request } from "../../../api/config";
+import { setIsShow } from "../../../redux/reducers/Loading";
+import { useDispatch } from "react-redux";
+import moment, { min } from "moment";
+import { useLocation, useParams } from "react-router-dom";
 
 const DetailSchedule = () => {
-  const [createSchedule, setCreateSchedule] = React.useState({
+  const dispatch = useDispatch();
+  const [currentSchedule, setCurrentSchedule] = React.useState({
     id: "",
     title: "",
     description: "",
-    place: "",
+    address: "",
     date: "",
-    timeStart: "",
-    timeEnd: "",
+    startDate: "",
+    endDate: "",
   });
 
   const [value, onChange] = React.useState(new Date());
   const [valueTime, onChangeTime] = React.useState("10:00");
+  const params = useParams();
 
   // const listScheduleA = [
   //   {
   //     id: "A",
   //     title: "Schedule A",
   //     description: "Description A",
-  //     place: "Place A",
+  //     address: "Place A",
   //     date: new Date(),
-  //     timeStart: "12:00",
-  //     timeEnd: "12:30",
+  //     startDate: "12:00",
+  //     endDate: "12:30",
   //   },
   //   {
   //     id: "B",
   //     title: "Schedule B",
   //     description: "Description B",
-  //     place: "Place B",
+  //     address: "Place B",
   //     date: "10/30/2023",
-  //     timeStart: "12:00",
-  //     timeEnd: "13:15",
+  //     startDate: "12:00",
+  //     endDate: "13:15",
   //   },
   //   {
   //     id: "C",
   //     title: "Schedule C",
   //     description: "Description C",
-  //     place: "Place C",
+  //     address: "Place C",
   //     date: "02/21/2023",
-  //     timeStart: "12:00",
-  //     timeEnd: "16:00",
+  //     startDate: "12:00",
+  //     endDate: "16:00",
   //   },
   // ];
+
+  const formatAMPM = (time) => {
+    var [hours, minutes] = time.split(":");
+    const ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12;
+    // hours = hours ? hours : 12; // the hour '0' should be '12'
+    hours = hours < 10 ? "0" + hours : hours;
+    minutes = parseInt(minutes);
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    const strTime = hours + ":" + minutes + " " + ampm;
+    return strTime;
+  };
 
   const [listSchedule, setListSchedule] = React.useState([]);
 
   React.useEffect(() => {
+    getAPI();
+  }, []);
+
+  const getAPI = async () => {
+    dispatch(setIsShow(true));
     request
       .get(
-        "https://server.6figurespos.com/gateway/api/project/management/admin/schedule/project/1"
+        `https://server.6figurespos.com/gateway/api/project/management/admin/schedule/project/${params.id}`
       )
       .then((response) => {
         setListSchedule(response.data.data);
+        console.log(response.data.data);
+        dispatch(setIsShow(false));
       })
       .catch((error) => {
         console.log(error);
+        dispatch(setIsShow(false));
       });
-  }, []);
+  };
+
+  const deleteAPI = async (id, action) => {
+    request
+      .delete(`/api/project/management/admin/schedule/${id}`)
+      .then((response) => {
+        action();
+      })
+      .catch((error) => {});
+  };
+
+  const addAPI = async (schedule) => {
+    request
+      .post(`/api/project/management/admin/schedule`, schedule)
+      .then((response) => {
+        getAPI();
+      })
+      .catch((error) => {
+        getAPI();
+      });
+  };
 
   return (
     <>
@@ -80,6 +126,17 @@ const DetailSchedule = () => {
             data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasRight"
             aria-controls="offcanvasRight"
+            onClick={() => {
+              setCurrentSchedule({
+                id: "",
+                title: "",
+                description: "",
+                address: "",
+                date: "",
+                startDate: "",
+                endDate: "",
+              });
+            }}
           >
             Tạo cuộc họp
           </div>
@@ -87,7 +144,19 @@ const DetailSchedule = () => {
         {listSchedule.map((item) => {
           return (
             <div className="mt-3" key={item.id}>
-              <CardSchedule schedule={item} />
+              <CardSchedule
+                schedule={item}
+                deleteAction={() => {
+                  deleteAPI(item.id, () => {
+                    console.log(`Delete ${item.id}`);
+                    setListSchedule(
+                      listSchedule.filter((currentItem) => {
+                        return currentItem.id !== item.id;
+                      })
+                    );
+                  });
+                }}
+              />
             </div>
           );
         })}
@@ -111,14 +180,14 @@ const DetailSchedule = () => {
             className="rounded-circle border px-2"
             data-bs-dismiss="offcanvas"
             onClick={() => {
-              setCreateSchedule({
+              setCurrentSchedule({
                 id: "",
                 title: "",
                 description: "",
-                place: "",
+                address: "",
                 date: "",
-                timeStart: "",
-                timeEnd: "",
+                startDate: "",
+                endDate: "",
               });
             }}
           >
@@ -133,9 +202,9 @@ const DetailSchedule = () => {
             <Calendar
               className="border-0 mx-auto"
               onChange={(value) => {
-                setCreateSchedule({ ...createSchedule, date: value });
+                setCurrentSchedule({ ...currentSchedule, date: value });
               }}
-              value={createSchedule.date}
+              value={currentSchedule.date}
             />
           </div>
 
@@ -146,9 +215,9 @@ const DetailSchedule = () => {
                 className="text-center"
                 disableClock
                 onChange={(value) => {
-                  setCreateSchedule({ ...createSchedule, timeStart: value });
+                  setCurrentSchedule({ ...currentSchedule, startDate: value });
                 }}
-                value={createSchedule.timeStart}
+                value={currentSchedule.startDate}
               />
             </div>
             <div className="mt-4 ps-4 ms-3">
@@ -156,11 +225,11 @@ const DetailSchedule = () => {
               <TimePicker
                 className="text-center"
                 disableClock
-                minTime={createSchedule.timeStart}
+                minTime={currentSchedule.startDate}
                 onChange={(value) => {
-                  setCreateSchedule({ ...createSchedule, timeEnd: value });
+                  setCurrentSchedule({ ...currentSchedule, endDate: value });
                 }}
-                value={createSchedule.timeEnd}
+                value={currentSchedule.endDate}
               />
             </div>
           </div>
@@ -172,10 +241,10 @@ const DetailSchedule = () => {
                 type="text"
                 className="flex-fill px-2"
                 placeholder="Nhập tiêu đề"
-                value={createSchedule.title}
+                value={currentSchedule.title}
                 onChange={(e) => {
-                  setCreateSchedule({
-                    ...createSchedule,
+                  setCurrentSchedule({
+                    ...currentSchedule,
                     title: e.target.value,
                   });
                 }}
@@ -184,10 +253,10 @@ const DetailSchedule = () => {
             <div className="mt-4 px-4 mx-3">
               <p className="me-3">Mô tả:</p>
               <textarea
-                value={createSchedule.description}
+                value={currentSchedule.description}
                 onChange={(e) => {
-                  setCreateSchedule({
-                    ...createSchedule,
+                  setCurrentSchedule({
+                    ...currentSchedule,
                     description: e.target.value,
                   });
                 }}
@@ -205,11 +274,11 @@ const DetailSchedule = () => {
                 type="text"
                 className="flex-fill px-2"
                 placeholder="Nhập tiêu đề"
-                value={createSchedule.place}
+                value={currentSchedule.address}
                 onChange={(e) => {
-                  setCreateSchedule({
-                    ...createSchedule,
-                    place: e.target.value,
+                  setCurrentSchedule({
+                    ...currentSchedule,
+                    address: e.target.value,
                   });
                 }}
               />
@@ -221,23 +290,34 @@ const DetailSchedule = () => {
             data-bs-dismiss="offcanvas"
             className="btn btn-primary px-4"
             onClick={() => {
-              setCreateSchedule({
-                ...createSchedule,
+              let currentDate = moment(currentSchedule.date).format(
+                "yyyy-MM-DD"
+              );
+              let currentTime = formatAMPM(currentSchedule.startDate);
+              let currentTime2 = formatAMPM(currentSchedule.endDate);
+
+              const apiSchedule = {
+                ...currentSchedule,
                 id: Math.floor(Math.random * 100),
-              });
-              console.log(createSchedule);
-              setListSchedule(() => {
-                setCreateSchedule({
-                  id: "",
-                  title: "",
-                  description: "",
-                  place: "",
-                  date: "",
-                  timeStart: "",
-                  timeEnd: "",
-                });
-                return [...listSchedule, createSchedule];
-              });
+                startDate: `${currentDate} ${currentTime}`,
+                endDate: `${currentDate} ${currentTime2}`,
+                projectId: `${params.id}`,
+              };
+
+              console.log(apiSchedule);
+              addAPI(apiSchedule);
+              // setListSchedule(() => {
+              //   setCurrentSchedule({
+              //     id: "",
+              //     title: "",
+              //     description: "",
+              //     address: "",
+              //     date: "",
+              //     startDate: "",
+              //     endDate: "",
+              //   });
+              //   return [...listSchedule, currentSchedule];
+              // });
             }}
           >
             Thêm

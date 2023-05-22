@@ -40,7 +40,7 @@ const DashboardStaff = () => {
   React.useEffect(() => {
     dispatch(setIsShow(true));
     request
-      .get("/api/project/management/admin/project")
+      .get("/api/project/management/staff/project")
       .then((response) => {
         console.log(response.data.data.list);
         dispatch(setIsShow(false));
@@ -54,7 +54,9 @@ const DashboardStaff = () => {
     <Template>
       <div className="container-fluid pt-4 px-32">
         <div className="bg-light rounded-3 pt-3">
-          <p className="mb-3 ms-3">Danh sách công việc được phân công</p>
+          <p className="mb-3 ms-3 fw-bold">
+            Danh sách công việc được phân công
+          </p>
           {listDuAn.map((item, i) => {
             return <ProjectDashboardStaff project={item} key={i} />;
           })}

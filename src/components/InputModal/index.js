@@ -7,7 +7,9 @@ const InputModal = (props) => {
       <input
         type="text"
         className="form-control disable"
-        placeholder={`Nhập ${props.title.toLowerCase()}`}
+        placeholder={`${
+          props.placeholder || `Nhập ${props.title.toLowerCase()}`
+        }`}
         value={props.value}
         onChange={props.action}
         disabled={props.disabled}

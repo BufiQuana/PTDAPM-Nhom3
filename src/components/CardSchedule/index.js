@@ -1,8 +1,10 @@
 import * as React from "react";
 import "./style.css";
+import { request } from "../../api/config";
 
 const CardSchedule = (props) => {
   const {
+    id,
     title,
     description,
     address,
@@ -48,7 +50,7 @@ const CardSchedule = (props) => {
     return "";
   };
 
-  const existenceFormatted = existence.replaceAll("0h", "");
+  const existenceFormatted = existence?.replaceAll("0h", "");
 
   return (
     <div className="bg-E9EFFE rounded-2 p-3">
@@ -65,13 +67,69 @@ const CardSchedule = (props) => {
           Thời gian: {formattedDate(startDate)} {timeHourMinute(startDate)} -{" "}
           {timeHourMinute(endDate)}
         </p>
-        <div className="btn btn-primary ms-auto">
-          <i className="fa fa-pen me-2"></i>
-          Sửa
-        </div>
-        <div className="btn btn-danger ms-3">
-          <i className="fa fa-trash me-2"></i>
-          Xoá
+        {!props.isStaff && (
+          <>
+            {/* <div className="btn btn-primary ms-auto">
+              <i className="fa fa-pen me-2"></i>
+              Sửa
+            </div>
+            <div
+              className="btn btn-danger ms-3"
+              data-bs-toggle="modal"
+              data-bs-target={`#deleteLichHop${id}`}
+            >
+              <i className="fa fa-trash me-2"></i>
+              Xoá
+            </div> */}
+            <div
+              className="btn btn-danger ms-auto"
+              data-bs-toggle="modal"
+              data-bs-target={`#deleteLichHop${id}`}
+            >
+              <i className="fa fa-trash me-2"></i>
+              Xoá
+            </div>
+          </>
+        )}
+      </div>
+      <div
+        className="modal fade"
+        id={`deleteLichHop${id}`}
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header d-block">
+              <h1
+                className="modal-title fs-5 text-center"
+                id="exampleModalLabel"
+              >
+                Xoá lịch họp
+              </h1>
+            </div>
+            <div className="modal-body">
+              Bạn có chắc chắn xóa lịch họp có id: {id}
+            </div>
+            <div className="modal-footer justify-content-evenly">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Quay lại
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                data-bs-dismiss="modal"
+                onClick={props.deleteAction}
+              >
+                Xoá
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

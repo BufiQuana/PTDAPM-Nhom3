@@ -10,15 +10,21 @@ import "./style.css";
 import { useDispatch } from "react-redux";
 import { setIsShow } from "../../../redux/reducers/Loading";
 import { request } from "../../../api/config";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 
 const ProjectDetail = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const [overview, setOverview] = React.useState(location.state);
+  // const [overview, setOverview] = React.useState(location.state);
+  const [overview, setOverview] = React.useState(null);
   const [listTask, setListTask] = React.useState([]);
-
+  const params = useParams();
   const listContentDetail = [
     {
       title: "Dự án tổng quan",
@@ -26,7 +32,7 @@ const ProjectDetail = () => {
     },
     {
       title: "Danh sách nhiệm vụ",
-      component: <DetailMission list={listTask} projectId={overview.id} />,
+      component: <DetailMission list={listTask} projectId={overview?.id} />,
     },
     {
       title: "Lịch họp",
@@ -55,16 +61,27 @@ const ProjectDetail = () => {
     if (currentContent.title === "Danh sách nhiệm vụ") {
       setCurrentContent({
         ...currentContent,
-        component: <DetailMission list={listTask} projectId={overview.id} />,
+        component: <DetailMission list={listTask} projectId={overview?.id} />,
       });
     }
   }, [overview, listTask]);
 
   React.useEffect(() => {
     request
-      .get(`/api/project/management/admin/project/${overview.id}`)
+      .get(`/api/project/management/admin/project/${params.id}`)
       .then((response) => {
         setListTask(response.data.data.tasks);
+      })
+      .catch((error) => {});
+
+    request
+      .get("/api/project/management/admin/project")
+      .then((response) => {
+        const list = response.data.data.list.filter((item) => {
+          return item.id === params.id;
+        });
+        console.log(list);
+        setOverview(list[0]);
       })
       .catch((error) => {});
   }, []);
@@ -75,7 +92,7 @@ const ProjectDetail = () => {
     setOverview(editProject);
     dispatch(setIsShow(true));
     request
-      .put(`/api/project/management/admin/project/${overview.id}`, editProject)
+      .put(`/api/project/management/admin/project/${params.id}`, editProject)
       .then((response) => {
         setOverview(editProject);
         dispatch(setIsShow(false));
@@ -87,7 +104,7 @@ const ProjectDetail = () => {
 
   const deleteAPI = async () => {
     request
-      .delete(`/api/project/management/admin/project/${overview.id}`)
+      .delete(`/api/project/management/admin/project/${params.id}`)
       .then((response) => {})
       .catch((error) => {});
   };
@@ -165,7 +182,7 @@ const ProjectDetail = () => {
             </div>
             <div className="modal-body">
               <InputModal
-                value={editProject.name}
+                value={editProject?.name}
                 title="Tên dự án"
                 action={(e) => {
                   setEditProject({ ...editProject, name: e.target.value });
@@ -173,7 +190,7 @@ const ProjectDetail = () => {
               />
 
               <InputModal
-                value={editProject.createdBy}
+                value={editProject?.createdBy}
                 title="Người quản lý"
                 action={(e) => {
                   setEditProject({
@@ -185,7 +202,7 @@ const ProjectDetail = () => {
               />
 
               <InputModal
-                value={editProject.description}
+                value={editProject?.description}
                 title="Mô tả"
                 action={(e) => {
                   setEditProject({
@@ -196,7 +213,7 @@ const ProjectDetail = () => {
               />
 
               <InputModal
-                value={editProject.startDate}
+                value={editProject?.startDate}
                 title="Ngày giao"
                 action={(e) => {
                   setEditProject({ ...editProject, startDate: e.target.value });
@@ -204,7 +221,7 @@ const ProjectDetail = () => {
               />
 
               <InputModal
-                value={editProject.endDate}
+                value={editProject?.endDate}
                 title="Ngày hết hạn dự kiến"
                 action={(e) => {
                   setEditProject({ ...editProject, endDate: e.target.value });
@@ -212,7 +229,7 @@ const ProjectDetail = () => {
               />
 
               <InputModal
-                value={editProject.budget}
+                value={editProject?.budget}
                 title="Ngân sách dự kiến"
                 action={(e) => {
                   setEditProject({ ...editProject, budget: e.target.value });
@@ -220,7 +237,7 @@ const ProjectDetail = () => {
               />
 
               <InputModal
-                value={editProject.priority}
+                value={editProject?.priority}
                 title="Độ ưu tiên"
                 action={(e) => {
                   setEditProject({ ...editProject, priority: e.target.value });
@@ -228,7 +245,7 @@ const ProjectDetail = () => {
               />
 
               <InputModal
-                value={editProject.status}
+                value={editProject?.status}
                 title="Trạng thái"
                 action={(e) => {
                   setEditProject({ ...editProject, status: e.target.value });

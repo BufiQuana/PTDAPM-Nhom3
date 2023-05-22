@@ -36,25 +36,25 @@ const Sidebar = () => {
           {
             title: "Trang chủ",
             icon: ASSETS.icHome,
-            iconAcitve: ASSETS.icHomeActive,
+            iconActive: ASSETS.icHomeActive,
             href: "/",
           },
           {
             title: "Quản lý dự án",
             icon: ASSETS.icSuppliers,
-            iconAcitve: ASSETS.icSuppliersActive,
+            iconActive: ASSETS.icSuppliersActive,
             href: "/manager/project",
           },
           {
             title: "Quản lý thời gian",
             icon: ASSETS.icReport,
-            iconAcitve: ASSETS.icReportActive,
+            iconActive: ASSETS.icReportActive,
             href: "/Time",
           },
           {
             title: "Quản lý thành viên",
             icon: ASSETS.icInventory,
-            iconAcitve: ASSETS.icInventoryActive,
+            iconActive: ASSETS.icInventoryActive,
             href: "/manager/team",
           },
         ]
@@ -62,14 +62,20 @@ const Sidebar = () => {
           {
             title: "Trang chủ",
             icon: ASSETS.icHome,
-            iconAcitve: ASSETS.icHomeActive,
+            iconActive: ASSETS.icHomeActive,
             href: "/",
           },
           {
             title: "Báo cáo công việc",
             icon: ASSETS.icHome,
-            iconAcitve: ASSETS.icHomeActive,
+            iconActive: ASSETS.icHomeActive,
             href: "/staff/report",
+          },
+          {
+            title: "Lịch họp",
+            icon: ASSETS.icHome,
+            iconActive: ASSETS.icHomeActive,
+            href: "/schedule",
           },
         ];
 
@@ -77,11 +83,11 @@ const Sidebar = () => {
     {
       title: "Cài đặt",
       icon: ASSETS.icSetting,
-      iconAcitve: ASSETS.icSettingActive,
+      iconActive: ASSETS.icSettingActive,
       href: "/setting",
     },
     {
-      title: "Log out",
+      title: "Đăng xuất",
       icon: ASSETS.icLogOut,
       href: "/",
     },
@@ -114,7 +120,7 @@ const Sidebar = () => {
               >
                 <img
                   src={
-                    currentActive === item.href ? item.iconAcitve : item.icon
+                    currentActive === item.href ? item.iconActive : item.icon
                   }
                   alt=""
                   width={24}
@@ -133,22 +139,22 @@ const Sidebar = () => {
                 to={item.href}
                 onClick={() => {
                   setCurrentActive(item.href);
-                  if (item.title === "Log out") {
+                  if (item.title === "Đăng xuất") {
                     dispatch(logout());
                     navigate("/");
                   }
                 }}
                 className={`sidebar-item d-flex align-items-center ps-5 color-5D6679 ${
                   currentActive === item.href &&
-                  item.title !== "Log out" &&
+                  item.title !== "Đăng xuất" &&
                   "text-primary text-semibold"
                 }`}
                 key={item.title}
               >
                 <img
                   src={
-                    currentActive === item.href && item.title !== "Log out"
-                      ? item.iconAcitve
+                    currentActive === item.href && item.title !== "Đăng xuất"
+                      ? item.iconActive
                       : item.icon
                   }
                   alt=""

@@ -91,6 +91,45 @@ const DetailMission = (props) => {
   //   },
   // ];
 
+  const changeTask = (currentTask, isPrev) => {
+    const copyTask = currentTask;
+    if (currentTask.status === "Cần làm") {
+      setListTaskTodo(
+        listTaskTodo.filter((task) => task.id !== currentTask.id)
+      );
+      copyTask.status = "Đang làm";
+      setListTaskInProgress([...listTaskInProgress, copyTask]);
+    } else if (currentTask.status === "Đang làm") {
+      setListTaskInProgress(
+        listTaskInProgress.filter((task) => task.id !== currentTask.id)
+      );
+
+      isPrev ? (copyTask.status = "Cần làm") : (copyTask.status = "Kiểm thử");
+
+      isPrev
+        ? setListTaskTodo([...listTaskTodo, copyTask])
+        : setListTaskTesting([...listTaskTesting, copyTask]);
+    } else if (currentTask.status === "Kiểm thử") {
+      setListTaskTesting(
+        listTaskTesting.filter((task) => task.id !== currentTask.id)
+      );
+
+      isPrev
+        ? (copyTask.status = "Đang làm")
+        : (copyTask.status = "Hoàn thành");
+
+      isPrev
+        ? setListTaskInProgress([...listTaskInProgress, copyTask])
+        : setListTaskDone([...listTaskDone, copyTask]);
+    } else {
+      setListTaskDone(
+        listTaskDone.filter((task) => task.id !== currentTask.id)
+      );
+      copyTask.status = "Kiểm thử";
+      setListTaskTesting([...listTaskTesting, copyTask]);
+    }
+  };
+
   const [listTaskTodo, setListTaskTodo] = React.useState(
     props.list.filter((task) => {
       return task.status === "Cần làm";
@@ -243,7 +282,14 @@ const DetailMission = (props) => {
           </div>
           <div className="d-flex flex-column">
             {listTaskTodo.map((item, i) => {
-              return <CardTask task={item} key={i} />;
+              return (
+                <CardTask
+                  task={item}
+                  key={i}
+                  changeTask={changeTask}
+                  disabledPrev
+                />
+              );
             })}
           </div>
         </div>
@@ -261,7 +307,7 @@ const DetailMission = (props) => {
           </div>
           <div className="d-flex flex-column">
             {listTaskInProgress.map((item, i) => {
-              return <CardTask task={item} key={i} />;
+              return <CardTask task={item} changeTask={changeTask} key={i} />;
             })}
           </div>
         </div>
@@ -279,7 +325,7 @@ const DetailMission = (props) => {
           </div>
           <div className="d-flex flex-column">
             {listTaskTesting.map((item, i) => {
-              return <CardTask task={item} key={i} />;
+              return <CardTask task={item} changeTask={changeTask} key={i} />;
             })}
           </div>
         </div>
@@ -297,7 +343,14 @@ const DetailMission = (props) => {
           </div>
           <div className="d-flex flex-column">
             {listTaskDone.map((item, i) => {
-              return <CardTask task={item} key={i} />;
+              return (
+                <CardTask
+                  task={item}
+                  changeTask={changeTask}
+                  key={i}
+                  disabledNext
+                />
+              );
             })}
           </div>
         </div>

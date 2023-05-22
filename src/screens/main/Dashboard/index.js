@@ -10,25 +10,11 @@ import { Link } from "react-router-dom";
 import { ASSETS } from "../../../constants/ASSETS";
 import "./style.css";
 import { request } from "../../../api/config";
+import { useDispatch } from "react-redux";
+import { setIsShow } from "../../../redux/reducers/Loading";
 
 const Dashboard = () => {
-  const listDuAn = [
-    {
-      icon: ASSETS.icDone,
-      content: "Đã hoàn thành",
-      amount: 0,
-    },
-    {
-      icon: ASSETS.icCurrent,
-      content: "Đang tiến hành",
-      amount: 0,
-    },
-    {
-      icon: ASSETS.icIsComing,
-      content: "Sắp bắt đầu",
-      amount: 0,
-    },
-  ];
+  const dispatch = useDispatch();
 
   const listTaiNguyen = [
     {
@@ -94,6 +80,45 @@ const Dashboard = () => {
       icon: null,
     },
   ];
+
+  const [listProject, setListProject] = React.useState([]);
+
+  const listDuAn = [
+    {
+      icon: ASSETS.icDone,
+      content: "Đã hoàn thành",
+      amount: listProject.filter((item) => {
+        return item.status === "Đã hoàn thành";
+      }).length,
+    },
+    {
+      icon: ASSETS.icCurrent,
+      content: "Đang tiến hành",
+      amount: listProject.filter((item) => {
+        return item.status === "Đã bắt đầu";
+      }).length,
+    },
+    {
+      icon: ASSETS.icIsComing,
+      content: "Sắp bắt đầu",
+      amount: listProject.filter((item) => {
+        return item.status === "Chưa bắt đầu";
+      }).length,
+    },
+  ];
+
+  React.useEffect(() => {
+    dispatch(setIsShow(true));
+    request
+      .get("/api/project/management/admin/project")
+      .then((response) => {
+        setListProject(response.data.data.list);
+        dispatch(setIsShow(false));
+      })
+      .catch((error) => {
+        dispatch(setIsShow(false));
+      });
+  }, []);
 
   return (
     <Template>

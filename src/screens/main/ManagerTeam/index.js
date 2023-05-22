@@ -24,6 +24,7 @@ const ManagerTeam = () => {
       .get("/api/project/management/admin/user")
       .then((response) => {
         const list = response.data.data.list;
+
         const listFiltered = list.filter((item) => {
           const rolesCode = item.roles.map((role) => {
             return role.code;

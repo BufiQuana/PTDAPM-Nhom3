@@ -154,16 +154,30 @@ const CardTask = (props) => {
             <div className="modal-footer justify-content-between">
               <button
                 type="button"
-                className="btn btn-primary d-flex align-items-center"
+                className={`btn d-flex align-items-center ${
+                  props.disabledPrev ? "btn-secondary" : "btn-primary"
+                }`}
                 data-bs-dismiss="modal"
+                disabled={props.disabledPrev}
+                onClick={() => {
+                  props.changeTask(props.task, true);
+                  console.log("Prev");
+                }}
               >
                 <i className="fa fa-angle-left me-2"></i>
                 <p>Chuyển sang mục trước</p>
               </button>
               <button
                 type="button"
-                className="btn btn-primary d-flex align-items-center"
+                className={`btn d-flex align-items-center ${
+                  props.disabledNext ? "btn-secondary" : "btn-primary"
+                }`}
                 data-bs-dismiss="modal"
+                disabled={props.disabledNext}
+                onClick={() => {
+                  props.changeTask(props.task, false);
+                  console.log("Next");
+                }}
               >
                 <p>Chuyển sang mục sau</p>
                 <i className="fa fa-angle-right ms-2"></i>

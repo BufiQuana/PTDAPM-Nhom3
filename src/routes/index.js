@@ -27,6 +27,7 @@ import ManagerCustomer from "../screens/main/ManagerCustomer";
 import DashboardStaff from "../screens/mainStaff/DashboardStaff";
 import ReportStaff from "../screens/mainStaff/ReportStaff";
 import ManagerBudget from "../screens/main/ManagerBudget";
+import Schedule from "../screens/main/Schedule";
 
 // import Manageresource from "../screens/main/Manageresource";
 // Newresource
@@ -81,10 +82,11 @@ export default () => {
         ) : (
           <Routes>
             <Route path={"/"} element={<DashboardStaff />} />
-            <Route path={"/manager/project/:id"} element={<ProjectDetail />} />
+            <Route path={"/staff/project/:id"} element={<ProjectDetail />} />
             <Route path={"/staff/report"} element={<ReportStaff />} />
             <Route path={"/notfound"} element={<NotFound />} />
             <Route path={"/setting"} element={<Setting />} />
+            <Route path={"/schedule"} element={<Schedule />} />
 
             <Route path={"*"} element={<Navigate to={"/notfound"} />} />
           </Routes>
