@@ -9,6 +9,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import { request } from "../../../api/config";
+import { useDispatch } from "react-redux";
+import { setIsShow } from "../../../redux/reducers/Loading";
 
 const DetailMission = (props) => {
   // const listTaskTodo = [
@@ -128,6 +130,13 @@ const DetailMission = (props) => {
       copyTask.status = "Kiểm thử";
       setListTaskTesting([...listTaskTesting, copyTask]);
     }
+    request
+      .put(
+        `/api/project/management/staff/projectTask/${currentTask.id}`,
+        copyTask
+      )
+      .then((response) => {})
+      .catch((error) => {});
   };
 
   const [listTaskTodo, setListTaskTodo] = React.useState(
@@ -178,8 +187,9 @@ const DetailMission = (props) => {
   }, [props.list]);
 
   const [listThanhVien, setListThanhVien] = React.useState([]);
-
+  const dispatch = useDispatch();
   React.useEffect(() => {
+    dispatch(setIsShow(true));
     request
       .get("/api/project/management/admin/user")
       .then((response) => {
@@ -196,8 +206,11 @@ const DetailMission = (props) => {
           return { ...item, label: item.fullName, value: item.fullName };
         });
         setListThanhVien(listFilteredStaff);
+        dispatch(setIsShow(false));
       })
-      .catch((error) => {});
+      .catch((error) => {
+        dispatch(setIsShow(false));
+      });
   }, []);
 
   const [startDate, setStartDate] = React.useState(new Date());
